@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Addax Docs](README.md)
+* [Overview](README.md)
 * [Addax 101](addax-101/README.md)
   * [Pools](addax-101/pools.md)
   * [Trading](addax-101/trading.md)
