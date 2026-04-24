@@ -1,45 +1,20 @@
 # Addax Docs
 
-Welcome to the Addax documentation hub.
+Addax is the first concentrated liquidity DEX on LitVM LiteForge. It is built on a Uniswap V3-compatible pool architecture combined with ARIS — an intent-based order execution layer that supports limit orders, dutch auctions, and DCA strategies.
 
-Addax is the first CLMM-based decentralized exchange on LitVM, enabling users to trade assets seamlessly and provide liquidity within custom price ranges.
+## What makes Addax different
 
-Unlike traditional AMMs, Addax leverages Concentrated Liquidity (V3 model) to improve capital efficiency and deliver better trading experiences.
+| Feature | Traditional AMM | Addax (CLMM) |
+|---|---|---|
+| Liquidity distribution | Spread across all prices | Focused in custom price ranges |
+| Capital efficiency | Low | High |
+| Slippage | Higher | Lower within active range |
+| Order types | Swap only | Swap + Limit + DCA + Dutch |
+| LP positions | Fungible tokens | NFTs with custom ranges |
 
----
+## Where to start
 
-V2 AMM vs V3 CLMM
-
-Feature| V2 AMM| V3 CLMM (Addax)
-Liquidity| Spread across all prices| Focused in custom ranges
-Capital Efficiency| Low| High
-Slippage| Higher| Lower (within range)
-Strategy| Passive| Active
-Fee Potential| Moderate| Higher (if well-positioned)
-
----
-
-Why V3 (CLMM) is Better
-
-- More efficient use of capital — liquidity is deployed where it matters most
-- Better pricing for traders — reduced slippage within active ranges
-- Higher earning potential for LPs — concentrated liquidity generates more fees
-- Custom strategies — users can optimize based on market expectations
-
----
-
-Addax brings a more advanced and efficient liquidity model to LitVM, giving both traders and liquidity providers greater control and improved performance.
-
-
-## What you'll find
-
-- `Addax 101` - Product overview, pools, swaps, and route selection.
-- `Protocol` - Core contracts, ARIS intents, limit orders, DCA, and fee model.
-- `Liquidity` - LP fundamentals, NFT positions, and range strategy.
-
-## Quick links
-
-- [Addax 101](./addax-101/README.md)
-- [Protocol](./protocol/README.md)
-- [Liquidity](./liquidity/README.md)
-
+- New to Addax? Start with [What is Addax](./getting-started/what-is-addax.md)
+- Providing liquidity? Go to [LP Basics](./liquidity/lp-basics.md)
+- Building a bot or integration? Go to [Developers](./developers/README.md)
+- Running a filler? Go to [Becoming a Filler](./aris/becoming-a-filler.md)
