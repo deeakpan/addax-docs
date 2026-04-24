@@ -27,7 +27,7 @@ All contracts are deployed on LitVM LiteForge (chain ID 4441). Source code is av
 
 **AddaxV3SwapRouter** — The primary swap entry point. Supports `exactInputSingle`, `exactInput` (multi-hop), `exactOutputSingle`, and `exactOutput`. Also exposes a `multicall` to batch swap + unwrap + refund in one transaction.
 
-**AddaxV3QuoterV2** — Read-only quoter. Use this off-chain to simulate swap output before executing. Never call this on-chain.
+**AddaxV3QuoterV2** — Read-only quoter. Use this offchain to simulate swap output before executing. Never call this onchain.
 
 **AddaxV3NonfungiblePositionManager** — Mint, increase, decrease, and collect LP positions. Each position is an ERC-721 NFT.
 

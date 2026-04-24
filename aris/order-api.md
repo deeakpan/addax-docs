@@ -1,6 +1,6 @@
 # Order API
 
-The Addax order API is the off-chain relay between users and fillers. Users submit signed orders to it. Fillers poll it to find open orders to execute.
+The Addax order API is the offchain relay between users and fillers. Users submit signed orders to it. Fillers poll it to find open orders to execute.
 
 **Base URL:** `https://addax.finance/api`
 
@@ -110,7 +110,7 @@ order = res.json()["order"]
 
 ## POST /api/orders/cancel
 
-Cancel an open order. Updates its status to `cancelled` in the database. Note: this is an off-chain cancellation. For guaranteed on-chain cancellation, invalidate the Permit2 nonce directly.
+Cancel an open order. Updates its status to `cancelled` in the database. Note: this is an offchain cancellation. For guaranteed onchain cancellation, invalidate the Permit2 nonce directly.
 
 **Body:**
 

@@ -7,7 +7,7 @@ The `AddaxAggregatorV3` contract (`0x7dB9ac619cE9A82ffd9c26fbb2Dc5BeD0215E2d6`) 
 | DEX | Link |
 |---|---|
 | Addax V3 | [addax.finance](https://addax.finance) |
-| Omni Fun | [app.onmi.fun](https://app.onmi.fun/) |
+| Onmi Fun | [app.onmi.fun](https://app.onmi.fun/) |
 | Lester Labs | [lester-labs.com](https://www.lester-labs.com/) |
 
 New routers are added by the Addax team via `addRouter(address)` — no redeployment required.

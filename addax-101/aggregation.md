@@ -4,7 +4,7 @@ Addax routes swaps through its own pools and external DEX liquidity on LitVM, fi
 
 ## AddaxAggregatorV3
 
-The `AddaxAggregatorV3` contract (`0x7dB9ac619cE9A82ffd9c26fbb2Dc5BeD0215E2d6`) is the on-chain aggregation layer. It accepts any allowlisted router address per swap call, enabling routing across multiple DEXes without redeploying.
+The `AddaxAggregatorV3` contract (`0x7dB9ac619cE9A82ffd9c26fbb2Dc5BeD0215E2d6`) is the onchain aggregation layer. It accepts any allowlisted router address per swap call, enabling routing across multiple DEXes without redeploying.
 
 **Supported swap types:**
 - Exact input single-hop
@@ -19,7 +19,7 @@ Addax aggregation currently routes across the following liquidity venues on LitV
 
 | DEX | Link |
 |---|---|
-| Omni Fun | [app.onmi.fun](https://app.onmi.fun/) |
+| Onmi Fun | [app.onmi.fun](https://app.onmi.fun/) |
 | Lester Labs | [lester-labs.com](https://www.lester-labs.com/) |
 
 New venues can be added by the Addax team via `addRouter` on the aggregator contract — no redeployment required.

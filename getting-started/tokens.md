@@ -27,7 +27,7 @@ wzkLTC.withdrawWrapped(amount);
 
 `0x60A84eBC3483fEFB251B76Aea5B8458026Ef4bea`
 
-The original wrapped zkLTC from the previous deployment. Still valid on-chain but no longer used as the pool base asset on Addax. Convert to the new wzkLTC via `depositWrapped`.
+The original wrapped zkLTC from the previous deployment. Still valid onchain but no longer used as the pool base asset on Addax. Convert to the new wzkLTC via `depositWrapped`.
 
 ## USDC
 

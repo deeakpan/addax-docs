@@ -1,6 +1,6 @@
 # Becoming a Filler
 
-A filler is an off-chain bot that watches the Addax order API, decodes open orders, and calls `execute()` on the appropriate reactor contract when it can profitably fill them.
+A filler is an offchain bot that watches the Addax order API, decodes open orders, and calls `execute()` on the appropriate reactor contract when it can profitably fill them.
 
 ## What you need
 
