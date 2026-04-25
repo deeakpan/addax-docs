@@ -167,4 +167,4 @@ At minimum, verify:
 2. You can source the output tokens at a cost below `inputAmount × (1 - margin)`.
 3. Gas cost does not exceed the spread.
 
-Use `AddaxV3QuoterV2` (`0x3Fb614d43146792FC0EfAe84f076e24085FD73A2`) to simulate swap output before committing.
+Use `AddaxV3QuoterV2` (`0x46D5676250100e6f9befF90455E032F85cC8775a`) to simulate swap output before committing.

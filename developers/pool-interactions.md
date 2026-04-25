@@ -9,7 +9,7 @@ const FACTORY_ABI = [
 ];
 
 const factory = new ethers.Contract(
-  "0x8E15B5482B201209300805A8eCD09cD1dA5800cc",
+  "0x8b84D582622DfF7bC3582365941791B68Ae70f4d",
   FACTORY_ABI,
   signer
 );
@@ -44,10 +44,10 @@ const NPM_ABI = [
 ];
 
 // Approve NPM to spend your tokens first
-await wzkLTC.approve("0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d", ethers.MaxUint256);
-await usdc.approve("0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d", ethers.MaxUint256);
+await wzkLTC.approve("0x049293EcBc8771488aD16EeDE035e14342D60D9F", ethers.MaxUint256);
+await usdc.approve("0x049293EcBc8771488aD16EeDE035e14342D60D9F", ethers.MaxUint256);
 
-const npm = new ethers.Contract("0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d", NPM_ABI, signer);
+const npm = new ethers.Contract("0x049293EcBc8771488aD16EeDE035e14342D60D9F", NPM_ABI, signer);
 
 const { tokenId } = await npm.mint({
   token0: WZKLTC,
@@ -71,7 +71,7 @@ const COLLECT_ABI = [
   "function collect((uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max)) returns (uint256 amount0, uint256 amount1)",
 ];
 
-const npm = new ethers.Contract("0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d", COLLECT_ABI, signer);
+const npm = new ethers.Contract("0x049293EcBc8771488aD16EeDE035e14342D60D9F", COLLECT_ABI, signer);
 
 await npm.collect({
   tokenId: myTokenId,
@@ -88,9 +88,9 @@ const ROUTER_ABI = [
   "function exactInputSingle((address tokenIn, address tokenOut, uint24 fee, address recipient, uint256 deadline, uint256 amountIn, uint256 amountOutMinimum, uint160 sqrtPriceLimitX96)) returns (uint256 amountOut)",
 ];
 
-await usdc.approve("0xD3B3b516d159AC5D0ddB579AA6feD92598202B55", amount);
+await usdc.approve("0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5", amount);
 
-const router = new ethers.Contract("0xD3B3b516d159AC5D0ddB579AA6feD92598202B55", ROUTER_ABI, signer);
+const router = new ethers.Contract("0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5", ROUTER_ABI, signer);
 
 const amountOut = await router.exactInputSingle({
   tokenIn: USDC,

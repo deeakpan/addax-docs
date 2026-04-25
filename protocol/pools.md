@@ -22,8 +22,8 @@ Anyone can create a pool permissionlessly via the factory:
 
 ```solidity
 address pool = AddaxV3Factory.createPool(
-    0xe8Af2359E1E3E034931595F4a17F0fD4d8655Cee, // wzkLTC
-    0xUSDC_ADDRESS,
+    0x6eF676c26E8C977554DA186eD0B215956E8F8753, // wzkLTC
+    0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50, // aUSDC
     3000 // 0.3% fee tier
 );
 ```

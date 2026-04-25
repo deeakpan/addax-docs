@@ -10,7 +10,7 @@ Once you have zkLTC you can wrap it to wzkLTC directly on [addax.finance](https:
 
 ```typescript
 const wzkLTC = new ethers.Contract(
-  "0xe8Af2359E1E3E034931595F4a17F0fD4d8655Cee",
+  "0x6eF676c26E8C977554DA186eD0B215956E8F8753",
   ["function deposit() payable"],
   signer
 );
@@ -22,6 +22,18 @@ If you already hold legacy wzkLTC (`0x60A84eBC3483fEFB251B76Aea5B8458026Ef4bea`)
 
 ```typescript
 const legacy = new ethers.Contract(legacyAddress, ["function approve(address,uint256) returns (bool)"], signer);
-await legacy.approve("0xe8Af2359E1E3E034931595F4a17F0fD4d8655Cee", amount);
+await legacy.approve("0x6eF676c26E8C977554DA186eD0B215956E8F8753", amount);
 await wzkLTC.depositWrapped(amount);
+```
+
+To convert legacy USDC to Addax aUSDC (1:1):
+
+```typescript
+const ausdc = new ethers.Contract(
+  "0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50",
+  ["function depositUnderlying(uint256)"],
+  signer
+);
+await legacyUsdc.approve("0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50", amount);
+await ausdc.depositUnderlying(amount);
 ```

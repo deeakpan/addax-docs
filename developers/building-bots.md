@@ -107,7 +107,7 @@ Periodically collect fees from all your LP positions.
 
 ```typescript
 const ERC721_ABI = ["function tokenOfOwnerByIndex(address, uint256) view returns (uint256)", "function balanceOf(address) view returns (uint256)"];
-const npm_full = new ethers.Contract("0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d", [...ERC721_ABI, ...COLLECT_ABI], signer);
+const npm_full = new ethers.Contract("0x049293EcBc8771488aD16EeDE035e14342D60D9F", [...ERC721_ABI, ...COLLECT_ABI], signer);
 
 async function collectAllFees() {
   const balance = await npm_full.balanceOf(walletAddress);

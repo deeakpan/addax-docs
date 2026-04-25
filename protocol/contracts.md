@@ -6,15 +6,17 @@ All contracts are deployed on LitVM LiteForge (chain ID 4441). Source code is av
 
 | Contract | Address | Source |
 |---|---|---|
-| AddaxV3Factory | `0x8E15B5482B201209300805A8eCD09cD1dA5800cc` | [UniswapV3Factory](https://github.com/deeakpan/addax/tree/main/contracts/v3-core) |
-| AddaxV3SwapRouter | `0xD3B3b516d159AC5D0ddB579AA6feD92598202B55` | [SwapRouter](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxV3QuoterV2 | `0x3Fb614d43146792FC0EfAe84f076e24085FD73A2` | [QuoterV2](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxV3NonfungiblePositionManager | `0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d` | [NonfungiblePositionManager](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxV3TickLens | `0x1Af35402EbA8c8e34Ed13c106d27DDe56F71aBf9` | [TickLens](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxV3InterfaceMulticall | `0xa26dAd7BCDbECA5fE6E3a5457ce6BB9988697D0b` | [UniswapInterfaceMulticall](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxAggregatorV3 | `0x7dB9ac619cE9A82ffd9c26fbb2Dc5BeD0215E2d6` | [AddaxAggregatorV3](https://github.com/deeakpan/addax/tree/main/contracts/src/addax) |
-| wzkLTC | `0xe8Af2359E1E3E034931595F4a17F0fD4d8655Cee` | [WzkLTC](https://github.com/deeakpan/addax/tree/main/contracts/src/addax) |
+| AddaxV3Factory | `0x8b84D582622DfF7bC3582365941791B68Ae70f4d` | [UniswapV3Factory](https://github.com/deeakpan/addax/tree/main/contracts/v3-core) |
+| AddaxV3SwapRouter | `0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5` | [SwapRouter](https://github.com/deeakpan/addax/tree/main/contracts) |
+| AddaxV3QuoterV2 | `0x46D5676250100e6f9befF90455E032F85cC8775a` | [QuoterV2](https://github.com/deeakpan/addax/tree/main/contracts) |
+| AddaxV3NonfungiblePositionManager | `0x049293EcBc8771488aD16EeDE035e14342D60D9F` | [NonfungiblePositionManager](https://github.com/deeakpan/addax/tree/main/contracts) |
+| AddaxV3TickLens | `0x942108E5AE08De7A48e1F28c3F96BB8849d472b6` | [TickLens](https://github.com/deeakpan/addax/tree/main/contracts) |
+| AddaxV3InterfaceMulticall | `0xD1Db44b4f9CDa05C32C7E9d1896296837a1cee57` | [UniswapInterfaceMulticall](https://github.com/deeakpan/addax/tree/main/contracts) |
+| AddaxAggregatorV3 | `0x0b0935E14b72D0d20c477788d7BD70D89632BEd5` | [AddaxAggregatorV3](https://github.com/deeakpan/addax/tree/main/contracts/src/addax) |
+| wzkLTC | `0x6eF676c26E8C977554DA186eD0B215956E8F8753` | [WzkLTC](https://github.com/deeakpan/addax/tree/main/contracts/src/addax) |
+| aUSDC | `0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50` | [AUSDC](https://github.com/deeakpan/addax/tree/main/contracts/src/addax) |
 | wzkLTC (Legacy) | `0x60A84eBC3483fEFB251B76Aea5B8458026Ef4bea` | — |
+| USDC (Legacy) | `0xd5118dEe968d1533B2A57aB66C266010AD8957fa` | — |
 | ArisPermit2 | `0xE6c670CED4e06e088AEb7141E0A0a557da517DbB` | [Permit2](https://github.com/deeakpan/addax/tree/main/contracts/src/aris/permit2) |
 | ArisLimitOrderReactor | `0x40ae8eCfc8e99D21634e8061C4E9CCf8da308502` | [LimitOrderReactor](https://github.com/deeakpan/addax/tree/main/contracts/src/aris/arisCore/reactors) |
 | ArisDutchOrderReactor | `0xA70c28ef82d1427Fa68F65960FbfFb1198349593` | [DutchOrderReactor](https://github.com/deeakpan/addax/tree/main/contracts/src/aris/arisCore/reactors) |

@@ -1,6 +1,6 @@
 # Swaps
 
-Every swap on Addax routes through the `AddaxV3SwapRouter` (`0xD3B3b516d159AC5D0ddB579AA6feD92598202B55`). The router finds the best path across available pools at each fee tier and executes the trade in a single transaction.
+Every swap on Addax routes through the `AddaxV3SwapRouter` (`0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5`). The router finds the best path across available pools at each fee tier and executes the trade in a single transaction.
 
 ## Swap types
 

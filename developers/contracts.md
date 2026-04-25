@@ -63,13 +63,13 @@ const provider = new ethers.JsonRpcProvider("https://liteforge.rpc.caldera.xyz/h
 const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
 
 const swapRouter = new ethers.Contract(
-  "0xD3B3b516d159AC5D0ddB579AA6feD92598202B55",
+  "0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5",
   SwapRouterABI.abi,
   signer
 );
 
 const npm = new ethers.Contract(
-  "0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d",
+  "0x049293EcBc8771488aD16EeDE035e14342D60D9F",
   NPMABI.abi,
   signer
 );
@@ -83,7 +83,7 @@ from web3 import Web3
 w3 = Web3(Web3.HTTPProvider("https://liteforge.rpc.caldera.xyz/http"))
 
 swap_router = w3.eth.contract(
-    address=Web3.to_checksum_address("0xD3B3b516d159AC5D0ddB579AA6feD92598202B55"),
+    address=Web3.to_checksum_address("0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5"),
     abi=SWAP_ROUTER_ABI,
 )
 ```

@@ -2,7 +2,7 @@
 
 ## Off-chain quotes with QuoterV2
 
-`AddaxV3QuoterV2` (`0x3Fb614d43146792FC0EfAe84f076e24085FD73A2`) lets you simulate a swap output without sending a transaction. Always use `staticCall` — the quoter reverts at the end of execution as a side effect of simulating the pool state.
+`AddaxV3QuoterV2` (`0x46D5676250100e6f9befF90455E032F85cC8775a`) lets you simulate a swap output without sending a transaction. Always use `staticCall` — the quoter reverts at the end of execution as a side effect of simulating the pool state.
 
 ### TypeScript
 
@@ -17,13 +17,13 @@ const QUOTER_ABI = [
 ];
 
 const quoter = new ethers.Contract(
-  "0x3Fb614d43146792FC0EfAe84f076e24085FD73A2",
+  "0x46D5676250100e6f9befF90455E032F85cC8775a",
   QUOTER_ABI,
   provider
 );
 
-const WZKLTC = "0xe8Af2359E1E3E034931595F4a17F0fD4d8655Cee";
-const USDC   = "0x..."; // USDC address on LitVM
+const WZKLTC = "0x6eF676c26E8C977554DA186eD0B215956E8F8753";
+const USDC   = "0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50"; // aUSDC address on LitVM
 
 // Quote: how much USDC do I get for 1 wzkLTC?
 const [amountOut] = await quoter.quoteExactInputSingle.staticCall(
@@ -47,7 +47,7 @@ w3 = Web3(Web3.HTTPProvider("https://liteforge.rpc.caldera.xyz/http"))
 QUOTER_ABI = [{"name":"quoteExactInputSingle","type":"function","stateMutability":"nonpayable","inputs":[{"name":"tokenIn","type":"address"},{"name":"tokenOut","type":"address"},{"name":"fee","type":"uint24"},{"name":"amountIn","type":"uint256"},{"name":"sqrtPriceLimitX96","type":"uint160"}],"outputs":[{"name":"amountOut","type":"uint256"},{"name":"sqrtPriceX96After","type":"uint160"},{"name":"initializedTicksCrossed","type":"uint32"},{"name":"gasEstimate","type":"uint256"}]}]
 
 quoter = w3.eth.contract(
-    address=Web3.to_checksum_address("0x3Fb614d43146792FC0EfAe84f076e24085FD73A2"),
+    address=Web3.to_checksum_address("0x46D5676250100e6f9befF90455E032F85cC8775a"),
     abi=QUOTER_ABI,
 )
 
@@ -74,7 +74,7 @@ const POOL_ABI = [
   "function liquidity() view returns (uint128)",
 ];
 
-const factory = new ethers.Contract("0x8E15B5482B201209300805A8eCD09cD1dA5800cc", FACTORY_ABI, provider);
+const factory = new ethers.Contract("0x8b84D582622DfF7bC3582365941791B68Ae70f4d", FACTORY_ABI, provider);
 const poolAddress = await factory.getPool(WZKLTC, USDC, 3000);
 const pool = new ethers.Contract(poolAddress, POOL_ABI, provider);
 

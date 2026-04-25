@@ -2,7 +2,7 @@
 
 ## wzkLTC — Addax Wrapped zkLTC
 
-`0xe8Af2359E1E3E034931595F4a17F0fD4d8655Cee`
+`0x6eF676c26E8C977554DA186eD0B215956E8F8753`
 
 The primary wrapped native token used across all Addax pools. It follows the WETH9 interface — deposit native zkLTC to receive wzkLTC 1:1, burn wzkLTC to withdraw native.
 
@@ -31,4 +31,5 @@ The original wrapped zkLTC from the previous deployment. Still valid onchain but
 
 ## USDC
 
-The primary quote asset for wzkLTC/USDC pools on Addax. 6 decimal places.
+The Addax quote asset is **aUSDC** (`0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50`, 6 decimals), a 1:1 wrapper over legacy USDC (`0xd5118dEe968d1533B2A57aB66C266010AD8957fa`).  
+Convert with `depositUnderlying(amount)` after approving legacy USDC to the aUSDC contract.

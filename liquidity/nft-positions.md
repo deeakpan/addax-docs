@@ -1,6 +1,6 @@
 # NFT Positions
 
-Every LP position on Addax is minted as an ERC-721 NFT by the `AddaxV3NonfungiblePositionManager` (`0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d`). The NFT encodes all parameters of your position and can be transferred, held in a wallet, or managed through the Addax interface.
+Every LP position on Addax is minted as an ERC-721 NFT by the `AddaxV3NonfungiblePositionManager` (`0x049293EcBc8771488aD16EeDE035e14342D60D9F`). The NFT encodes all parameters of your position and can be transferred, held in a wallet, or managed through the Addax interface.
 
 ## What the NFT stores
 
@@ -24,7 +24,7 @@ Every LP position on Addax is minted as an ERC-721 NFT by the `AddaxV3Nonfungibl
 ## Key contract calls
 
 ```typescript
-const NPM_ADDRESS = "0xc2f05acF91A95a410BE2abb9e779e3CFA524C01d";
+const NPM_ADDRESS = "0x049293EcBc8771488aD16EeDE035e14342D60D9F";
 
 // Mint a new position
 await npm.mint({
