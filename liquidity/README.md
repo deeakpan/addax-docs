@@ -6,6 +6,7 @@ Unlike traditional AMMs, Addax uses concentrated liquidity — you choose the pr
 
 ## Sections
 
+- [Creating Pools](./creating-pools.md)
 - [LP Basics & How You Earn](./lp-basics.md)
 - [NFT Positions](./nft-positions.md)
 - [Range Strategy](./ranges.md)
