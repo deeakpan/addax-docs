@@ -1,20 +1,24 @@
-# Developers
+# Integration Overview
 
-This section covers everything you need to build on top of Addax — querying prices, managing liquidity programmatically, building bots, and interacting with contracts directly.
+This section covers building on top of Addax — opening and managing trades programmatically, reading positions and prices, and running keeper bots.
 
 ## Sections
 
-- [Contract Source & ABIs](./contracts.md)
-- [Fetching Prices](./fetching-prices.md)
-- [Pool Interactions](./pool-interactions.md)
-- [Building Bots](./building-bots.md)
+- [Trading Contracts](./contracts.md) — interacting with the trading stack
+- [Fetching Prices](./fetching-prices.md) — reading mark/index prices and market stats
+- [Building Keeper Bots](./building-bots.md) — running the trigger and oracle keepers
 
 ## Quick references
 
 | What | Where |
 |---|---|
-| Contract source | [github.com/deeakpan/addax/tree/main/contracts](https://github.com/deeakpan/addax/tree/main/contracts) |
-| RPC | `https://liteforge.rpc.caldera.xyz/http` |
 | Chain ID | `4441` |
-| Order API | `https://addax.finance/api/orders` |
+| RPC (HTTP) | `https://liteforge.rpc.caldera.xyz/http` |
+| RPC (WS) | `wss://liteforge.rpc.caldera.xyz/ws` |
 | Block explorer | `https://liteforge.explorer.caldera.xyz` |
+| Contract addresses | [Contracts & Addresses](../protocol/contracts.md) |
+| App REST endpoints | `/api/perp/positions`, `/api/perp/open-limits`, `/api/perp/market-stats`, `/api/perp/vault-mark` |
+
+## The stacks
+
+Each collateral (USDC, ADDX, WzkLTC) has its own set of contracts. For most integrations, target the **gUSDC stack** — it is the primary UI and keeper stack. Read state from **Storage**, write via **Trading**, and read fee/leverage params from **Pair Infos**.

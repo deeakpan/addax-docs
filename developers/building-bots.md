@@ -1,131 +1,80 @@
-# Building Bots
+# Building Keeper Bots
 
-## Price monitoring bot
+Addax relies on keepers to push prices and execute triggers (limit opens, take-profit, stop-loss, liquidations). The reference implementations live in the repo under `perps-keepers` (trigger keeper) and `oracle-keeper` (price keeper). This page shows how to run and extend them.
 
-Poll the pool's `slot0` every block and alert when price moves beyond a threshold.
+## Trigger keeper
+
+Scans open positions and pending limit orders against the live oracle price and executes anything due.
+
+### Commands
+
+```bash
+# in perps-keepers/
+npm start        # long-running watcher (WebSocket subscriptions + continuous scan)
+npm run once     # single scan+execute pass, then exit (good for cron)
+npm run db:init  # create Supabase tables from .env
+npm run db:reset # wipe and recreate keeper tables/cursors
+```
+
+### What it does each pass
+
+1. Load open positions and pending limit orders (from the indexed mirror in Supabase).
+2. For each, compare against the current oracle price to decide if OPEN / TP / SL / LIQ conditions are met.
+3. Execute the **two-step trigger**:
+   - `executeNftOrder(orderType, …)` on Trading → emits `NftOrderInitiated`.
+   - `fulfillOrder` on the Price Aggregator → resolves price and completes the action.
+4. Simulate first and skip known reverts (timelock not elapsed, condition invalid, already executed), then submit.
+
+### Environment
+
+Key `.env` values (see `perps-keepers/.env.example`):
+
+| Var | Purpose |
+|---|---|
+| `PERPS_RPC_URL` | LiteForge RPC (HTTP) |
+| `PERPS_SYNC_MODE` | `websocket` (recommended) or `poll` |
+| `PERPS_POLL_INTERVAL_MS` | Scan interval when polling |
+| `KEEPER_PRIVATE_KEY` | Wallet that owns the keeper NFT and pays gas |
+| `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | State mirror |
+| `SUPABASE_DB_URL` | Direct Postgres URL for schema management |
+
+> The keeper wallet must hold the keeper NFT used by `executeNftOrder`. On this deployment the trigger NFT is minted to the deployer, so use that key (or transfer the NFT).
+
+### Reliability notes
+
+- Prefer **WebSocket** mode: `eth_subscribe` avoids slow `eth_getLogs` polling.
+- Startup log catch-up runs **best-effort and non-blocking**, so the live subscription comes up immediately even if historical `getLogs` is slow.
+- RPC calls use extended timeouts and retries.
+
+## Oracle keeper
+
+Keeps the price feed fresh so the aggregator always has recent data to fulfill against.
+
+```bash
+# in oracle-keeper/
+npm start     # long-running watch loop, pushes price updates on interval
+npm run once  # push a single update, then exit
+```
+
+Configure `ORACLE_POLL_INTERVAL_MS` and the RPC/keeper credentials in `oracle-keeper/.env`.
+
+## Writing your own keeper
+
+Any wallet holding the keeper NFT can execute triggers permissionlessly and earn rewards. The minimal loop is:
 
 ```typescript
-import { ethers } from "ethers";
+for (const pos of openPositions) {
+  const price = await getOraclePrice(pos.pairIndex);
+  const kind = classify(pos, price); // "TP" | "SL" | "LIQ" | null
+  if (!kind) continue;
 
-const provider = new ethers.JsonRpcProvider("https://liteforge.rpc.caldera.xyz/http");
+  // simulate to skip known reverts
+  const ok = await simulate(() => trading.executeNftOrder(orderType(kind), ...));
+  if (!ok) continue;
 
-const POOL_ABI = [
-  "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16, uint16, uint16, uint8, bool)",
-  "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
-];
-
-const pool = new ethers.Contract(POOL_ADDRESS, POOL_ABI, provider);
-
-// Listen to Swap events in real-time
-pool.on("Swap", (sender, recipient, amount0, amount1, sqrtPriceX96, liquidity, tick) => {
-  const price = tickToPrice(Number(tick), 18, 6);
-  console.log(`Swap — new price: ${price} USDC/wzkLTC at tick ${tick}`);
-});
-
-function tickToPrice(tick: number, decimals0: number, decimals1: number): number {
-  return Math.pow(1.0001, tick) * Math.pow(10, decimals0 - decimals1);
+  await trading.executeNftOrder(orderType(kind), pos.trader, pos.pairIndex, pos.index, nftId, nftType);
+  await priceAggregator.fulfillOrder(orderId, priceData);
 }
 ```
 
-## LP rebalancing bot
-
-Check if your position is out of range and re-mint at current price.
-
-```typescript
-async function checkAndRebalance(tokenId: bigint) {
-  const [sqrtPriceX96, currentTick] = await pool.slot0();
-  const position = await npm.positions(tokenId);
-
-  const inRange = currentTick >= position.tickLower && currentTick < position.tickUpper;
-
-  if (!inRange) {
-    console.log("Position out of range — rebalancing...");
-
-    // 1. Remove all liquidity
-    await npm.decreaseLiquidity({
-      tokenId,
-      liquidity: position.liquidity,
-      amount0Min: 0,
-      amount1Min: 0,
-      deadline: Math.floor(Date.now() / 1000) + 300,
-    });
-
-    // 2. Collect tokens + fees
-    await npm.collect({
-      tokenId,
-      recipient: walletAddress,
-      amount0Max: (2n ** 128n) - 1n,
-      amount1Max: (2n ** 128n) - 1n,
-    });
-
-    // 3. Re-mint at new range centred on currentTick
-    const SPACING = 60; // for 0.3% pool
-    const width = 600;
-    const tickLower = Math.floor((Number(currentTick) - width) / SPACING) * SPACING;
-    const tickUpper = Math.ceil((Number(currentTick) + width) / SPACING) * SPACING;
-
-    await npm.mint({
-      token0: WZKLTC, token1: USDC, fee: 3000,
-      tickLower, tickUpper,
-      amount0Desired: await wzkLTC.balanceOf(walletAddress),
-      amount1Desired: await usdc.balanceOf(walletAddress),
-      amount0Min: 0, amount1Min: 0,
-      recipient: walletAddress,
-      deadline: Math.floor(Date.now() / 1000) + 300,
-    });
-  }
-}
-```
-
-## Arbitrage bot
-
-Watch for price divergence between Addax and external venues.
-
-```typescript
-async function checkArbitrage() {
-  // Get Addax price
-  const [addaxOut] = await quoter.quoteExactInputSingle.staticCall(
-    WZKLTC, USDC, 3000, ethers.parseEther("1"), 0
-  );
-
-  // Get external venue price (implement for each venue)
-  const externalPrice = await getExternalPrice();
-
-  const addaxPrice = Number(ethers.formatUnits(addaxOut, 6));
-  const spread = Math.abs(addaxPrice - externalPrice) / externalPrice;
-
-  if (spread > 0.005) { // 0.5% threshold
-    console.log(`Arb opportunity: Addax ${addaxPrice} vs external ${externalPrice}`);
-    // Execute the arb via aggregator or direct router
-  }
-}
-```
-
-## Fee collection bot
-
-Periodically collect fees from all your LP positions.
-
-```typescript
-const ERC721_ABI = ["function tokenOfOwnerByIndex(address, uint256) view returns (uint256)", "function balanceOf(address) view returns (uint256)"];
-const npm_full = new ethers.Contract("0x049293EcBc8771488aD16EeDE035e14342D60D9F", [...ERC721_ABI, ...COLLECT_ABI], signer);
-
-async function collectAllFees() {
-  const balance = await npm_full.balanceOf(walletAddress);
-
-  for (let i = 0; i < balance; i++) {
-    const tokenId = await npm_full.tokenOfOwnerByIndex(walletAddress, i);
-
-    const tx = await npm_full.collect({
-      tokenId,
-      recipient: walletAddress,
-      amount0Max: (2n ** 128n) - 1n,
-      amount1Max: (2n ** 128n) - 1n,
-    });
-    await tx.wait();
-    console.log(`Collected fees for position ${tokenId}`);
-  }
-}
-
-// Run daily
-setInterval(collectAllFees, 86_400_000);
-```
+Reuse the trimmed ABIs in `perps-keepers/src/lib/abis.ts` and the two-step helper in `perps-keepers/src/lib/nft-orders.ts` as a starting point.

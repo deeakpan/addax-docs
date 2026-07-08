@@ -1,39 +1,29 @@
-# Fees
+# Protocol Fees
 
-Addax has three distinct fee layers. Understanding each one matters for both traders and LPs.
+This page describes how fees are structured and routed on-chain. For a trader-focused explanation of how fees affect your PnL, see [Fees & Spread](../trading/fees-and-spread.md).
 
-## 1. Pool swap fees (LP fees)
+## Fee types
 
-Every pool has a fixed fee tier set at creation — `0.05%`, `0.3%`, or `1%`. When a swap routes through a pool, this fee is charged on the input amount and distributed to liquidity providers whose range was active during the swap.
+| Fee | Charged on | When |
+|---|---|---|
+| **Spread** | Mark price | Open and close |
+| **Opening fee** | Position notional | On open |
+| **Closing fee** | Position notional | On close |
+| **Price impact** | Position notional | On open/close, scales with size & skew |
+| **Borrowing / holding fee** | Position notional | Continuously while open |
 
-**How LP fee earnings are calculated:**
+All per-pair fee parameters (spread, fee percentages, borrowing rates, leverage caps) live in the **Pair Infos** contract for each stack and can be read on-chain.
 
-LPs earn fees proportional to their share of liquidity within the active tick range at the time of the swap. If your position covers 20% of the liquidity at the current tick, you earn 20% of that swap's fee.
+## Where fees go
 
-Example: A 100 USDC swap through a 0.3% pool generates 0.30 USDC in fees. If your position holds 20% of liquidity in range, you earn 0.06 USDC from that single swap.
+Opening and closing fees are split between:
 
-Fees accumulate inside your NFT position and are collected by calling `collect()` on the NonfungiblePositionManager — they are not auto-compounded.
+- **gToken vault** — accrues to liquidity providers as increased assets per share.
+- **Protocol / treasury** — protocol-controlled allocation.
+- **Keeper / trigger rewards** — pays the keepers that execute limit, TP, SL, and liquidation orders.
 
-## 2. Protocol fees (ARIS orders)
+Borrowing/holding fees and net trader losses accrue to the vault, which is the counterparty to all trades.
 
-The ARIS reactor contracts support an optional protocol fee controlled by a `feeController` address set by the Addax team. From `ProtocolFees.sol`:
+## Reading fees on-chain
 
-```solidity
-uint256 private constant MAX_FEE_BPS = 5; // 0.05% maximum
-```
-
-The protocol fee is capped at **0.05%** of order value. It is injected into the resolved order as an additional output sent to the fee recipient. If no `feeController` is configured, no protocol fee is taken.
-
-Currently the fee controller is not set — **ARIS orders on Addax are fee-free**.
-
-## 3. Filler economics
-
-ARIS fillers are independent actors. They earn profit by filling orders at a price slightly better than the user's minimum — capturing the spread between current market price and the user's stated minimum output. The protocol does not dictate filler margins; it is a competitive market.
-
-## Summary
-
-| Fee type | Who pays | Who receives | Amount |
-|---|---|---|---|
-| Pool swap fee | Trader | LPs in active range | 0.05% / 0.3% / 1% |
-| Protocol fee | Order filler | Addax protocol | 0% (up to 0.05% max) |
-| Filler margin | Implicit (user gets min output) | Filler | Market-determined |
+Fee and pair parameters are exposed by the **Pair Infos** contract of each stack (gUSDC / gADDX / gzKLTC). See [Contracts & Addresses](contracts.md) for addresses and [Trading Contracts](../developers/contracts.md) for how to query them.

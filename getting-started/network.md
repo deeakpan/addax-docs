@@ -15,10 +15,11 @@ Addax is deployed on **LitVM LiteForge** — a testnet chain built on the LitVM 
 
 ## Adding to MetaMask
 
-Open MetaMask → Settings → Networks → Add Network, and fill in the values above.
+Open MetaMask → Settings → Networks → Add Network, and fill in the values above. Or connect your wallet at the Addax app and approve the "Add network" prompt automatically.
 
-## Getting testnet tokens
+## What you need to trade
 
-- **zkLTC** — native gas token, available from the LitVM faucet.
-- **USDC** — mintable test token on the network.
-- **wzkLTC** — wrap native zkLTC via the Addax interface or call `deposit()` on the wzkLTC contract directly.
+1. **zkLTC** for gas — claim it from the LiteForge faucet (see [Get Testnet zkLTC](faucet.md)).
+2. **Collateral** — USDC, ADDX, or zkLTC to use as margin. See [Collateral & Tokens](tokens.md).
+
+Once your wallet is connected and funded, head to [Setting Up to Trade](setting-up-to-trade.md).

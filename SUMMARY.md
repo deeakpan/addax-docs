@@ -6,37 +6,42 @@
 
 * [What is Addax](getting-started/what-is-addax.md)
 * [Network & Setup](getting-started/network.md)
-* [Tokens](getting-started/tokens.md)
+* [Setting Up to Trade](getting-started/setting-up-to-trade.md)
+* [Collateral & Tokens](getting-started/tokens.md)
 * [Get Testnet zkLTC](getting-started/faucet.md)
 
-## Trading
+## Leveraged Trading
 
-* [Swaps](trading/swaps.md)
-* [Aggregation & Best Price](trading/aggregation.md)
+* [Overview](trading/overview.md)
+* [Opening & Closing Trades](trading/opening-closing-trades.md)
+* [Order Types](trading/order-types.md)
+* [Leverage & Liquidation](trading/leverage-and-liquidation.md)
+* [Fees & Spread](trading/fees-and-spread.md)
+* [Pair List](trading/pair-list.md)
+* [Asset Classes](trading/asset-classes.md)
 
-## Liquidity
+## Vaults
 
-* [LP Basics & How You Earn](liquidity/lp-basics.md)
-* [NFT Positions](liquidity/nft-positions.md)
-* [Range Strategy](liquidity/ranges.md)
+* [gToken Vaults](vaults/overview.md)
+* [Depositing & Withdrawing](vaults/depositing.md)
+* [ADDX Staking](vaults/staking.md)
 
 ## Protocol
 
-* [Protocol Overview](protocol/overview.md)
+* [Architecture Overview](protocol/overview.md)
+* [Price Oracle](protocol/price-oracle.md)
+* [Keepers](protocol/keepers.md)
 * [Fees](protocol/fees.md)
-* [Permit2](protocol/permit2.md)
 * [Contracts & Addresses](protocol/contracts.md)
-* [ARIS Overview](aris/README.md)
-  * [How Intents Work](aris/intents.md)
-  * [Limit Orders](aris/limit-orders.md)
-  * [Dutch Orders](aris/dutch-orders.md)
-  * [DCA Orders](aris/dca.md)
-  * [Order API](aris/order-api.md)
-  * [Becoming a Filler](aris/becoming-a-filler.md)
 
-## Technical
+## Developers
 
-* [Contract Source & ABIs](developers/contracts.md)
+* [Integration Overview](developers/README.md)
+* [Trading Contracts](developers/contracts.md)
 * [Fetching Prices](developers/fetching-prices.md)
-* [Pool Interactions](developers/pool-interactions.md)
-* [Building Bots](developers/building-bots.md)
+* [Building Keeper Bots](developers/building-bots.md)
+
+## Help
+
+* [FAQ](help/faq.md)
+* [Glossary](help/glossary.md)

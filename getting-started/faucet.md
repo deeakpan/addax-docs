@@ -1,39 +1,26 @@
 # Get Testnet zkLTC
 
-zkLTC is the native gas token on LitVM LiteForge. You need it to pay for transactions.
+`zkLTC` is the native gas token on LitVM LiteForge. You need a small amount to pay for transactions (opening/closing trades, approvals, vault deposits).
 
 ## Claim from the faucet
 
 Go to the LiteForge faucet at [liteforge.hub.caldera.xyz](https://liteforge.hub.caldera.xyz/), connect your wallet, and request testnet zkLTC.
 
-Once you have zkLTC you can wrap it to wzkLTC directly on [addax.finance](https://addax.finance) or by calling `deposit()` on the wzkLTC contract:
+## Using zkLTC as collateral
+
+Gas aside, you can also trade with zkLTC as margin. Because margin must be an ERC-20, native zkLTC is wrapped into **WzkLTC** first. The Addax app does this automatically when you pick zkLTC as collateral, or you can wrap it yourself:
 
 ```typescript
 const wzkLTC = new ethers.Contract(
-  "0x6eF676c26E8C977554DA186eD0B215956E8F8753",
-  ["function deposit() payable"],
+  "0xA52F83592b9216C574e11324d4468F078aEA05BE",
+  ["function deposit() payable", "function withdraw(uint256)"],
   signer
 );
 
+// Wrap 1 zkLTC -> 1 WzkLTC
 await wzkLTC.deposit({ value: ethers.parseEther("1") });
 ```
 
-If you already hold legacy wzkLTC (`0x60A84eBC3483fEFB251B76Aea5B8458026Ef4bea`) from a previous deployment, convert it 1:1 without needing native zkLTC:
+## Getting trading collateral
 
-```typescript
-const legacy = new ethers.Contract(legacyAddress, ["function approve(address,uint256) returns (bool)"], signer);
-await legacy.approve("0x6eF676c26E8C977554DA186eD0B215956E8F8753", amount);
-await wzkLTC.depositWrapped(amount);
-```
-
-To convert legacy USDC to Addax aUSDC (1:1):
-
-```typescript
-const ausdc = new ethers.Contract(
-  "0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50",
-  ["function depositUnderlying(uint256)"],
-  signer
-);
-await legacyUsdc.approve("0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50", amount);
-await ausdc.depositUnderlying(amount);
-```
+You'll also want collateral to trade with. USDC and ADDX are available from the in-app faucet on testnet. See [Collateral & Tokens](tokens.md) for details and addresses.

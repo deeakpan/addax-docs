@@ -1,20 +1,23 @@
 # Addax Docs
 
-Addax is the first concentrated liquidity DEX on LitVM LiteForge. It is built on a Uniswap V3-compatible pool architecture combined with ARIS — an intent-based order execution layer that supports limit orders, dutch auctions, and DCA strategies.
+Addax is a decentralized leveraged trading platform on **LitVM LiteForge**. Trade crypto, commodities, and equities with up to 150x leverage, directly from your wallet — no sign-up, no custody, no order book.
 
-## What makes Addax different
+Addax uses a synthetic, oracle-priced trading model: instead of matching buyers and sellers, trades settle against a collateral vault at the oracle mark price. This lets Addax offer deep, uniform liquidity across every market and low, predictable fees.
 
-| Feature | Traditional AMM | Addax (CLMM) |
-|---|---|---|
-| Liquidity distribution | Spread across all prices | Focused in custom price ranges |
-| Capital efficiency | Low | High |
-| Slippage | Higher | Lower within active range |
-| Order types | Swap only | Swap + Limit + DCA + Dutch |
-| LP positions | Fungible tokens | NFTs with custom ranges |
+## What you can do
+
+| | |
+|---|---|
+| **Trade** | Long or short crypto, gold, and stocks with 1x–150x leverage |
+| **Order types** | Market, limit, stop-loss and take-profit |
+| **Provide liquidity** | Deposit into gToken vaults (gUSDC, gzKLTC, gADDX) and earn from trading activity |
+| **Multiple collaterals** | Open trades with USDC, ADDX, or zkLTC |
 
 ## Where to start
 
-- New to Addax? Start with [What is Addax](./getting-started/what-is-addax.md)
-- Providing liquidity? Go to [LP Basics](./liquidity/lp-basics.md)
-- Building a bot or integration? Go to [Developers](./developers/README.md)
-- Running a filler? Go to [Becoming a Filler](./aris/becoming-a-filler.md)
+- New here? Read [What is Addax](getting-started/what-is-addax.md).
+- Ready to trade? See [Setting up to trade](getting-started/setting-up-to-trade.md) then [Opening & closing trades](trading/opening-closing-trades.md).
+- Want to earn? Go to [gToken Vaults](vaults/overview.md).
+- Building an integration or bot? Start with [Developers](developers/README.md).
+
+> Addax is currently deployed on the LitVM LiteForge testnet. All tokens are testnet assets with no monetary value.

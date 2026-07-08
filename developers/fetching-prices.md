@@ -1,103 +1,69 @@
 # Fetching Prices
 
-## Off-chain quotes with QuoterV2
+Addax prices come from the on-chain **Price Aggregator**, which reads the **DIA oracle** feed for each market. This page shows how to read mark prices and market data for integrations.
 
-`AddaxV3QuoterV2` (`0x46D5676250100e6f9befF90455E032F85cC8775a`) lets you simulate a swap output without sending a transaction. Always use `staticCall` — the quoter reverts at the end of execution as a side effect of simulating the pool state.
+## Market → oracle key
 
-### TypeScript
+Each pair maps to an oracle key and a `pairIndex`:
 
-```typescript
-import { ethers } from "ethers";
+| Pair | pairIndex | Oracle key |
+|---|---|---|
+| BTC | 0 | `BTC/USD` |
+| ETH | 1 | `ETH/USD` |
+| LTC | 2 | `LTC/USD` |
+| XAU | 3 | `XAU/USD` |
+| TSLA | 4 | `TSLA/USD` |
+| SPCX | 5 | `SPCX/USD` |
+| SOL | 6 | `SOL/USD` |
+| HYPE | 7 | `HYPE/USD` |
 
-const provider = new ethers.JsonRpcProvider("https://liteforge.rpc.caldera.xyz/http");
+Full list: [Pair List](../trading/pair-list.md).
 
-const QUOTER_ABI = [
-  "function quoteExactInputSingle(address tokenIn, address tokenOut, uint24 fee, uint256 amountIn, uint160 sqrtPriceLimitX96) returns (uint256 amountOut, uint160 sqrtPriceX96After, uint32 initializedTicksCrossed, uint256 gasEstimate)",
-  "function quoteExactInput(bytes path, uint256 amountIn) returns (uint256 amountOut, uint160[] sqrtPriceX96AfterList, uint32[] initializedTicksCrossedList, uint256 gasEstimate)",
-];
+## Reading from the DIA oracle
 
-const quoter = new ethers.Contract(
-  "0x46D5676250100e6f9befF90455E032F85cC8775a",
-  QUOTER_ABI,
-  provider
-);
-
-const WZKLTC = "0x6eF676c26E8C977554DA186eD0B215956E8F8753";
-const USDC   = "0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50"; // aUSDC address on LitVM
-
-// Quote: how much USDC do I get for 1 wzkLTC?
-const [amountOut] = await quoter.quoteExactInputSingle.staticCall(
-  WZKLTC,
-  USDC,
-  3000,                       // 0.3% fee tier
-  ethers.parseEther("1"),     // 1 wzkLTC in
-  0                           // no price limit
-);
-
-console.log(`1 wzkLTC = ${ethers.formatUnits(amountOut, 6)} USDC`);
-```
-
-### Python
-
-```python
-from web3 import Web3
-
-w3 = Web3(Web3.HTTPProvider("https://liteforge.rpc.caldera.xyz/http"))
-
-QUOTER_ABI = [{"name":"quoteExactInputSingle","type":"function","stateMutability":"nonpayable","inputs":[{"name":"tokenIn","type":"address"},{"name":"tokenOut","type":"address"},{"name":"fee","type":"uint24"},{"name":"amountIn","type":"uint256"},{"name":"sqrtPriceLimitX96","type":"uint160"}],"outputs":[{"name":"amountOut","type":"uint256"},{"name":"sqrtPriceX96After","type":"uint160"},{"name":"initializedTicksCrossed","type":"uint32"},{"name":"gasEstimate","type":"uint256"}]}]
-
-quoter = w3.eth.contract(
-    address=Web3.to_checksum_address("0x46D5676250100e6f9befF90455E032F85cC8775a"),
-    abi=QUOTER_ABI,
-)
-
-result = quoter.functions.quoteExactInputSingle(
-    WZKLTC_ADDRESS,
-    USDC_ADDRESS,
-    3000,
-    10**18,  # 1 wzkLTC
-    0,
-).call()
-
-amount_out = result[0]
-print(f"1 wzkLTC = {amount_out / 10**6} USDC")
-```
-
-## Reading pool price from slot0
-
-For a real-time price without simulating a swap, read `slot0` directly from the pool:
+The DIA oracle exposes values by key. Read the latest price for a market:
 
 ```typescript
-const FACTORY_ABI = ["function getPool(address, address, uint24) view returns (address)"];
-const POOL_ABI = [
-  "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
-  "function liquidity() view returns (uint128)",
-];
+import { createPublicClient, http } from "viem";
 
-const factory = new ethers.Contract("0x8b84D582622DfF7bC3582365941791B68Ae70f4d", FACTORY_ABI, provider);
-const poolAddress = await factory.getPool(WZKLTC, USDC, 3000);
-const pool = new ethers.Contract(poolAddress, POOL_ABI, provider);
+const client = createPublicClient({ transport: http("https://liteforge.rpc.caldera.xyz/http") });
 
-const [sqrtPriceX96, tick] = await pool.slot0();
+const DIA_ABI = [
+  {
+    type: "function",
+    name: "getValue",
+    stateMutability: "view",
+    inputs: [{ name: "key", type: "string" }],
+    outputs: [
+      { name: "value", type: "uint128" },
+      { name: "timestamp", type: "uint128" },
+    ],
+  },
+] as const;
 
-// Convert sqrtPriceX96 to human-readable price
-// price = (sqrtPriceX96 / 2^96)^2 * 10^(decimals0 - decimals1)
-const Q96 = 2n ** 96n;
-const price = (sqrtPriceX96 * sqrtPriceX96 * BigInt(10 ** 6)) / (Q96 * Q96 * BigInt(10 ** 18));
-console.log(`Pool price: ${price} USDC per wzkLTC`);
+const [value, timestamp] = await client.readContract({
+  address: "0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb",
+  abi: DIA_ABI,
+  functionName: "getValue",
+  args: ["BTC/USD"],
+});
 ```
 
-## Multi-hop quotes
+> Confirm the oracle interface and value scaling against the deployed contract — DIA-style feeds typically report 8-decimal values with a publish timestamp.
 
-For a path through multiple pools (e.g. tokenA → wzkLTC → USDC):
+## App REST endpoints
 
-```typescript
-import { encodePath } from "@uniswap/v3-sdk"; // or encode manually
+The Addax app exposes convenience endpoints that already resolve prices and market stats:
 
-const path = encodePath(
-  [TOKEN_A, WZKLTC, USDC],
-  [3000, 3000]
-);
+| Endpoint | Returns |
+|---|---|
+| `GET /api/perp/market-stats` | Per-market mark price, change, and stats |
+| `GET /api/perp/vault-mark` | Vault mark / assets-per-share data |
+| `GET /api/perp/positions` | Open positions (indexed) |
+| `GET /api/perp/open-limits` | Pending open limit orders |
 
-const [amountOut] = await quoter.quoteExactInput.staticCall(path, amountIn);
-```
+These are the simplest way to display prices and positions without wiring up oracle reads yourself.
+
+## Mark vs execution price
+
+The oracle returns the **mark price**. Execution applies **spread** (and price impact for large size) on top — longs open slightly above mark, shorts slightly below. Pull spread/fee parameters from the **Pair Infos** contract. See [Fees & Spread](../trading/fees-and-spread.md).

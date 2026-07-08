@@ -1,38 +1,61 @@
 # Contracts & Addresses
 
-All contracts are deployed on LitVM LiteForge (chain ID 4441). Source code is available at [github.com/deeakpan/addax/tree/main/contracts](https://github.com/deeakpan/addax/tree/main/contracts).
+Addax is deployed on **LitVM LiteForge** (chain ID `4441`). Each collateral has its own **stack** of contracts. Addresses below are the current LiteForge deployment; the app can override them per-environment via `NEXT_PUBLIC_PERPS_*` variables.
 
-## Testnet Deployments
+## Network
 
-| Contract | Address | Source |
+| | |
+|---|---|
+| Chain ID | `4441` |
+| RPC | `https://liteforge.rpc.caldera.xyz/http` |
+| Explorer | `https://liteforge.explorer.caldera.xyz` |
+| Deploy block (indexing) | `24989478` |
+
+## Tokens
+
+| Token | Address | Decimals |
 |---|---|---|
-| AddaxV3Factory | `0x8b84D582622DfF7bC3582365941791B68Ae70f4d` | [UniswapV3Factory](https://github.com/deeakpan/addax/tree/main/contracts/v3-core) |
-| AddaxV3SwapRouter | `0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5` | [SwapRouter](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxV3QuoterV2 | `0x46D5676250100e6f9befF90455E032F85cC8775a` | [QuoterV2](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxV3NonfungiblePositionManager | `0x049293EcBc8771488aD16EeDE035e14342D60D9F` | [NonfungiblePositionManager](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxV3TickLens | `0x942108E5AE08De7A48e1F28c3F96BB8849d472b6` | [TickLens](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxV3InterfaceMulticall | `0xD1Db44b4f9CDa05C32C7E9d1896296837a1cee57` | [UniswapInterfaceMulticall](https://github.com/deeakpan/addax/tree/main/contracts) |
-| AddaxAggregatorV3 | `0x0b0935E14b72D0d20c477788d7BD70D89632BEd5` | [AddaxAggregatorV3](https://github.com/deeakpan/addax/tree/main/contracts/src/addax) |
-| wzkLTC | `0x6eF676c26E8C977554DA186eD0B215956E8F8753` | [WzkLTC](https://github.com/deeakpan/addax/tree/main/contracts/src/addax) |
-| aUSDC | `0x72F4efAC9133d28fa05aEbc9edCd8fC3dE14BB50` | [AUSDC](https://github.com/deeakpan/addax/tree/main/contracts/src/addax) |
-| wzkLTC (Legacy) | `0x60A84eBC3483fEFB251B76Aea5B8458026Ef4bea` | — |
-| USDC (Legacy) | `0xd5118dEe968d1533B2A57aB66C266010AD8957fa` | — |
-| ArisPermit2 | `0xE6c670CED4e06e088AEb7141E0A0a557da517DbB` | [Permit2](https://github.com/deeakpan/addax/tree/main/contracts/src/aris/permit2) |
-| ArisLimitOrderReactor | `0x40ae8eCfc8e99D21634e8061C4E9CCf8da308502` | [LimitOrderReactor](https://github.com/deeakpan/addax/tree/main/contracts/src/aris/arisCore/reactors) |
-| ArisDutchOrderReactor | `0xA70c28ef82d1427Fa68F65960FbfFb1198349593` | [DutchOrderReactor](https://github.com/deeakpan/addax/tree/main/contracts/src/aris/arisCore/reactors) |
-| ArisExclusiveDutchOrderReactor | `0x538048AD8cC03Fe083CC5414a705D14ac0561331` | [ExclusiveDutchOrderReactor](https://github.com/deeakpan/addax/tree/main/contracts/src/aris/arisCore/reactors) |
-| ArisDcaOrderReactor | `0x99D007fD09211B437Ecc415bB8D08Cc68b877672` | [DcaOrderReactor](https://github.com/deeakpan/addax/tree/main/contracts/src/aris/arisCore/reactors) |
+| USDC | `0xA6b7A782Fc4349914dADde5b8A8A8B1daDFBF6DB` | 6 |
+| ADDX | `0xf6078Be81aBCC95BAC306356963E7adB986783f9` | 18 |
+| WzkLTC | `0xA52F83592b9216C574e11324d4468F078aEA05BE` | 18 |
 
-## Contract roles
+## gUSDC stack (primary)
 
-**AddaxV3Factory** — Creates pools. Call `createPool(tokenA, tokenB, fee)` to deploy a new pool. The factory is permanent and not upgradeable.
+| Contract | Address |
+|---|---|
+| Storage | `0xe4D06BeE42d9B8CbF3d95520dCC2E522bF67D2a3` |
+| Trading | `0x6F23a6500a211F1fC9684672C70952C8a6221b1B` |
+| Callbacks | `0x62920E443abFEFb91126FAC8F4D2e1Db60aA5341` |
+| Pair Infos | `0xc491c999eB5734eCFBe0E3AAc32DED28CA3259B7` |
+| Price Aggregator | `0x3f0fA5CeC8B45111777baB68E37155ca0edC6400` |
+| Vault (gUSDC) | `0x1e40483dee13E72c6E9d412989D408f00e75dbEF` |
+| DIA Oracle | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` |
+| Staking | `0xA0961eE578d708837225012fb13b7b6f0dF5Ec15` |
 
-**AddaxV3SwapRouter** — The primary swap entry point. Supports `exactInputSingle`, `exactInput` (multi-hop), `exactOutputSingle`, and `exactOutput`. Also exposes a `multicall` to batch swap + unwrap + refund in one transaction.
+## gzKLTC stack
 
-**AddaxV3QuoterV2** — Read-only quoter. Use this offchain to simulate swap output before executing. Never call this onchain.
+| Contract | Address |
+|---|---|
+| Storage | `0x0bab0C9354392989a20Ad3D739Bd1dE30cC82B1F` |
+| Trading | `0x63Ea6b78E663a296b1A86A9Db684F008aCD88f01` |
+| Callbacks | `0x17D04b545b80deA3F60295C70Fb35485aB7bac68` |
+| Pair Infos | `0x93Fd0177f0b03891D5A114E261DDA53fB8b7b032` |
+| Price Aggregator | `0x182A16a127cfD8a1b4EaE0a5653df467B3E6456E` |
+| Vault (gzKLTC) | `0xBE154C61Ddb666Da4B9c63d56E21D7E6f7355FF4` |
 
-**AddaxV3NonfungiblePositionManager** — Mint, increase, decrease, and collect LP positions. Each position is an ERC-721 NFT.
+## gADDX stack
 
-**AddaxAggregatorV3** — Routes swaps through any allowlisted router. Supports all four swap types and multicall batching. New routers (e.g. external DEXes) are added by the Addax team via `addRouter`.
+| Contract | Address |
+|---|---|
+| Storage | `0xfa63B98b6feEBD766d8863b25d2dc0d5c668b8Ad` |
+| Trading | `0x498771e39066926D424B7fB939D93F61bad3E040` |
+| Callbacks | `0xe3E60155b444356C14E9A0088A1882a6F9430B49` |
+| Pair Infos | `0xb82c0b371233588ee72c841eb6178D87d57F89Ce` |
+| Price Aggregator | `0x61af9FBbEA6D011Cea8d1FE6c674f89bD8eF5D8F` |
+| Vault (gADDX) | `0x634767abA7e823D1B995c40acC68389e1A8D642E` |
 
-**ArisPermit2** — Handles token approvals for all ARIS reactor settlements. Users approve Permit2 once; reactors use permit witness signatures for individual order fills.
+## Notes
+
+- Use the **gUSDC stack** for most integrations — it is the primary UI and keeper stack.
+- The **Trading** contract is the write entry point; **Storage** is the canonical read source; **Pair Infos** holds per-pair fee/leverage params. See [Trading Contracts](../developers/contracts.md).
+- Always verify addresses against the live app configuration before sending funds; testnet deployments can be redeployed.

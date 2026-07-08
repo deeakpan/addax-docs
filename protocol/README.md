@@ -1,14 +1,11 @@
 # Protocol
 
-The Addax protocol consists of two layers deployed on LitVM LiteForge.
-
-**V3 Swap Stack** — A Uniswap V3-compatible factory, router, quoter, and position manager. Pools are permissionlessly created between any two tokens at a chosen fee tier. LP positions are ERC-721 NFTs.
-
-**ARIS** — The intent execution layer. Users sign typed orders offchain. Fillers submit them onchain to reactor contracts that validate constraints and settle transfers through Permit2.
+Addax is a synthetic, oracle-priced leveraged trading protocol built on the gTrade / Gains Network architecture and deployed on LitVM LiteForge.
 
 ## Sections
 
-- [Contracts & Addresses](./contracts.md)
-- [Pools](./pools.md)
-- [Fees](./fees.md)
-- [Aggregator](./aggregator.md)
+- [Architecture Overview](./overview.md) — components and trade lifecycle
+- [Price Oracle](./price-oracle.md) — how prices enter the contracts
+- [Keepers](./keepers.md) — trigger and oracle keepers
+- [Fees](./fees.md) — fee structure and routing
+- [Contracts & Addresses](./contracts.md) — deployed addresses per stack

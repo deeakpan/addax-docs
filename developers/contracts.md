@@ -1,89 +1,93 @@
-# Contract Source & ABIs
+# Trading Contracts
 
-All Addax smart contracts are open source at [github.com/deeakpan/addax/tree/main/contracts](https://github.com/deeakpan/addax/tree/main/contracts).
+This page shows how to interact with the Addax trading stack directly. Addresses are on the [Contracts & Addresses](../protocol/contracts.md) page; examples target the **gUSDC stack**.
 
-## Source layout
+## Contract roles
 
-```
-contracts/
-  v3-core/              Uniswap V3 factory and pool (0.7.6)
-  src/
-    addax/
-      WzkLTC.sol        Custom wrapped native token
-      AddaxAggregatorV3.sol  Multi-router aggregator
-    aris/
-      arisCore/
-        reactors/       BaseReactor, LimitOrderReactor, DcaOrderReactor, DutchOrderReactor
-        lib/            Order encoding, DCA structs, Dutch decay math
-        base/           ReactorStructs, ProtocolFees, ReactorEvents
-      permit2/          Permit2 signature and allowance transfer
-      contracts/        Deployed wrappers (ArisPermit2, ArisLimitOrderReactor, etc.)
-```
+| Contract | Use it to |
+|---|---|
+| **Trading** | Open trades, close, update TP/SL, place/cancel limit orders, `executeNftOrder` (keepers) |
+| **Trading Storage** | Read open trades, open limit orders, per-pair config |
+| **Pair Infos** | Read spread, fees, borrowing rates, leverage caps |
+| **Price Aggregator** | `fulfillOrder` (keepers), read price request state |
+| **Vault (gToken)** | Deposit/withdraw liquidity (ERC-4626-style) |
 
-## Getting ABIs
+## Opening a market trade
 
-The easiest way is to import from the compiled artifacts:
+`openTrade` takes a trade struct, an order type, a spread-reduction id, slippage, and a referrer. For a market order the trade opens and settles in the same transaction (self-fulfilling).
 
 ```typescript
-import SwapRouterABI from "@uniswap/v3-periphery/artifacts/contracts/SwapRouter.sol/SwapRouter.json";
-import QuoterV2ABI from "@uniswap/v3-periphery/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json";
-import NPMABI from "@uniswap/v3-periphery/artifacts/contracts/NonfungiblePositionManager.sol/NonfungiblePositionManager.json";
+import { createWalletClient, http } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+
+// Trade tuple (gTrade v6 layout):
+// trader, pairIndex, index, initialPosToken, positionSizeCollateral,
+// openPrice, buy, leverage, tp, sl
+const trade = {
+  trader: account.address,
+  pairIndex: 0n,          // BTC — see Pair List
+  index: 0n,
+  initialPosToken: 0n,
+  positionSizeDai: 100_000000n, // 100 USDC (6 decimals)
+  openPrice: markPrice,   // 1e10-scaled price
+  buy: true,              // long
+  leverage: 50n,          // 50x
+  tp: 0n,                 // optional take-profit price
+  sl: 0n,                 // optional stop-loss price
+};
+
+// orderType: 0 = MARKET, 1 = LIMIT (open)
+await trading.write.openTrade([trade, orderType, spreadReductionId, slippageP, referrer]);
 ```
 
-For ARIS reactor contracts, the key ABI fragments are:
+> Confirm the exact struct field order and price scaling against the deployed ABI before sending funds — layouts differ slightly between gTrade versions.
+
+## Placing & canceling a limit order
+
+Open a limit by calling `openTrade` with the LIMIT order type — the order is stored on-chain until a keeper executes it. Cancel it with:
 
 ```typescript
-const REACTOR_ABI = [
-  "function execute((bytes order, bytes sig)) payable",
-  "function executeWithCallback((bytes order, bytes sig), bytes callbackData) payable",
-  "function executeBatch((bytes order, bytes sig)[]) payable",
-  "function executeBatchWithCallback((bytes order, bytes sig)[], bytes callbackData) payable",
-  "event Fill(bytes32 indexed orderHash, address indexed filler, address indexed swapper, uint256 nonce)",
-];
-
-const WZKLTC_ABI = [
-  "function deposit() payable",
-  "function withdraw(uint256 wad)",
-  "function depositWrapped(uint256 wad)",
-  "function withdrawWrapped(uint256 wad)",
-  "function legacyReserve() view returns (uint256)",
-  "function balanceOf(address) view returns (uint256)",
-  "function approve(address, uint256) returns (bool)",
-  "function transfer(address, uint256) returns (bool)",
-  "function transferFrom(address, address, uint256) returns (bool)",
-];
+await trading.write.cancelOpenLimitOrder([pairIndex, index]);
 ```
 
-## Connecting (TypeScript)
+Check for an existing open limit order via Storage:
 
 ```typescript
-import { ethers } from "ethers";
-
-const provider = new ethers.JsonRpcProvider("https://liteforge.rpc.caldera.xyz/http");
-const signer = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
-
-const swapRouter = new ethers.Contract(
-  "0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5",
-  SwapRouterABI.abi,
-  signer
-);
-
-const npm = new ethers.Contract(
-  "0x049293EcBc8771488aD16EeDE035e14342D60D9F",
-  NPMABI.abi,
-  signer
-);
+const has = await storage.read.hasOpenLimitOrder([trader, pairIndex, index]);
+const order = await storage.read.getOpenLimitOrder([trader, pairIndex, index]);
 ```
 
-## Connecting (Python)
+## Closing / updating
 
-```python
-from web3 import Web3
+```typescript
+// Close a market position (partial or full)
+await trading.write.closeTradeMarket([pairIndex, index]);
 
-w3 = Web3(Web3.HTTPProvider("https://liteforge.rpc.caldera.xyz/http"))
-
-swap_router = w3.eth.contract(
-    address=Web3.to_checksum_address("0xc6B464b146B1C9D03646b624f6B3ECA9794FdfB5"),
-    abi=SWAP_ROUTER_ABI,
-)
+// Update take-profit / stop-loss on a live position
+await trading.write.updateTp([pairIndex, index, newTpPrice]);
+await trading.write.updateSl([pairIndex, index, newSlPrice]);
 ```
+
+## Keeper execution (triggers)
+
+Limit, TP, SL, and liquidation are executed in two steps by keepers:
+
+```typescript
+// 1. Initiate the pending NFT order on Trading
+//    orderType: TP / SL / LIQ / OPEN
+await trading.write.executeNftOrder([orderType, trader, pairIndex, index, nftId, nftType]);
+
+// 2. Resolve the price on the aggregator to complete it
+await priceAggregator.write.fulfillOrder([orderId, priceData]);
+```
+
+See [Building Keeper Bots](building-bots.md) for a full, robust implementation, and [Keepers](../protocol/keepers.md) for the conceptual flow.
+
+## ABIs
+
+The app and keepers keep trimmed ABIs in the repo:
+
+- Frontend: `lib/perps/abi.ts`
+- Keepers: `perps-keepers/src/lib/abis.ts`
+
+These expose the exact function and event fragments Addax uses (`openTrade`, `cancelOpenLimitOrder`, `executeNftOrder`, `fulfillOrder`, `hasOpenLimitOrder`, `getOpenLimitOrder`, plus lifecycle events like `NftOrderInitiated`, `OpenLimitPlaced/Updated/Canceled`, and callback events).
