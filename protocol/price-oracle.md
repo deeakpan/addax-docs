@@ -8,22 +8,42 @@ Addax settles every open, close, and trigger against an **on-chain oracle mark**
 
 ## Why DIA
 
-Rather than operating a custom price pipeline as the long-term source of truth, Addax relies on an established oracle provider. DIA aggregates first-party and exchange data and publishes feeds that trading contracts can read (or consume via signed updates) with clear freshness and integrity guarantees.
+DIA aggregates first-party and exchange data and publishes feeds that trading contracts can read (or consume via signed updates) with clear freshness and integrity guarantees.
 
-## Testnet: push feeds (0.1% deviation)
+## Testnet: push feeds (1% deviation)
 
 On **LitVM testnet**, markets are driven by DIA **push** feeds:
 
 | Parameter | Value |
 |---|---|
 | Model | Push (on-chain storage updated by DIA) |
-| Deviation threshold | **0.1%** |
-| Heartbeat | Periodic forced refresh (alongside deviation) |
+| DIA oracle | `0xEd7f45c29FE6676e1eB7096aD5D6966abd62Bd1a` |
+| Deviation threshold | **1%** |
+| Heartbeat | **1 hour** (alongside deviation) |
 | Consumer API | Contracts read the latest published value (e.g. `getValue`) |
 
 A push feed updates when the aggregated price moves by at least the deviation threshold, or when the heartbeat interval elapses. Between updates, the last written price is what settlement uses, subject to protocol-side staleness checks.
 
-This configuration matches a common pattern among perpetual protocols that prefer simple on-chain reads during testnet and early production while still keeping marks reasonably tight.
+### Available feed keys
+
+| Ticker | Oracle key |
+|---|---|
+| BTC | `BTC/USD` |
+| ETH | `ETH/USD` |
+| LTC | `LTC/USD` |
+| SOL | `SOL/USD` |
+| XAU | `XAU/USD` |
+| WTI | `WTI/USD` |
+| TSLA | `TSLA` |
+| SPCX | `SPCX` |
+| NVDA | `NVDA` |
+| AAPL | `AAPL` |
+| MSFT | `MSFT` |
+| CPER | `CPER` |
+| NG | `NG` |
+| JPY | `USD/JPY` |
+
+Listed Addax markets and their `pairIndex` values: [Pair List](../trading/pair-list.md).
 
 ## Mainnet: pull feeds
 
@@ -46,10 +66,10 @@ The oracle supplies the **mark**. Each pair may still apply a **spread** (and si
 
 | Role | Address |
 |---|---|
-| DIA / Addax price feed (testnet) | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` |
+| DIA oracle | `0xEd7f45c29FE6676e1eB7096aD5D6966abd62Bd1a` |
 | Price aggregator (gUSDC) | `0xA184242a075bEA7012Ce83BD86f3E56a9bc33A73` |
 
-Per-market keys and Chainlink-style feed adapters are listed with the deployment in [Contracts & Addresses](contracts.md).
+Per-market Chainlink-style feed adapters are listed with the deployment in [Contracts & Addresses](contracts.md).
 
 ## Related
 

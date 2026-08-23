@@ -17,7 +17,7 @@ Addax is intentionally built on proven, widely adopted providers rather than bes
 | **DIA** | Market data oracle: mark prices for settlement |
 | **Goldsky** | Subgraph indexing: reliable access to on-chain trading activity |
 
-**Oracles (DIA).** Entries, exits, and liquidations settle against DIA marks. Testnet uses push feeds with a **0.1%** deviation threshold; mainnet is planned around DIA **pull** reports so each trade can consume a freshly signed price. Details: [Price Oracle](price-oracle.md).
+**Oracles (DIA).** Entries, exits, and liquidations settle against DIA marks. Testnet uses push feeds with a **1%** deviation threshold and a **1h** heartbeat; mainnet is planned around DIA **pull** reports so each trade can consume a freshly signed price. Details: [Price Oracle](price-oracle.md).
 
 **Indexing (Goldsky).** Protocol events (opens, closes, liquidations, limit lifecycle) are indexed through Goldsky subgraphs. That gives applications, keepers, and analytics a standard GraphQL surface over trading history without repeatedly scanning the full chain. Goldsky is a common choice for production subgraph hosting across DeFi.
 

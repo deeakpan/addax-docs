@@ -24,10 +24,9 @@ Addax perpetuals are deployed on **LitVM** (chain ID `4441`). Each collateral ha
 
 | | Address |
 |---|---|
-| DIA / Addax price feed (testnet) | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` |
-| Official DIA reference | `0xE7F65d4bAdcfABc4eA57B8F66bBa044363D89eec` |
+| DIA oracle (testnet) | `0xEd7f45c29FE6676e1eB7096aD5D6966abd62Bd1a` |
 
-**Testnet oracle policy:** DIA **push** feeds with **0.1%** deviation (see [Price Oracle](price-oracle.md)). **Mainnet** is planned to use DIA **pull** delivery.
+**Testnet oracle policy:** DIA **push** feeds with **1%** deviation and a **1h** heartbeat (see [Price Oracle](price-oracle.md)). **Mainnet** is planned to use DIA **pull** delivery.
 
 ### Per-market feed adapters
 
@@ -40,7 +39,6 @@ Addax perpetuals are deployed on **LitVM** (chain ID `4441`). Each collateral ha
 | TSLA | `0x8E307ac0512B10a7Dd2ADDfBc357f64CfC51cA78` |
 | SPCX | `0x122B459B3255C09856Db46c55B5B8de2422E60f5` |
 | SOL | `0x1ef45191447F216f5C0b81b2b6f41cb38292dd00` |
-| HYPE | `0xc2CC73b547f6F3ffAA40C49fE2Cb41aB494AB429` |
 
 ## Vaults (gTokens)
 

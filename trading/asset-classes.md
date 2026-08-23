@@ -4,7 +4,7 @@ Addax lists markets across several asset classes. All are traded the same way, s
 
 ## Crypto
 
-Digital assets such as **BTC, ETH, LTC, SOL, and HYPE**. Crypto markets are priced 24/7 and generally support the **highest leverage** on the platform. They are the most liquid and actively traded class on Addax.
+Digital assets such as **BTC, ETH, LTC, and SOL**. Crypto markets are priced 24/7 and generally support the **highest leverage** on the platform. They are the most liquid and actively traded class on Addax.
 
 ## Commodities
 

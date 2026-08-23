@@ -1,10 +1,10 @@
 # Fetching Prices
 
-Addax marks come from **DIA**. On LitVM testnet, feeds are **push**-updated with a **0.1%** deviation threshold; mainnet is planned around DIA **pull** reports. The **Price Aggregator** consumes those feeds for each market. This page shows how to read marks for integrations. Full oracle design: [Price Oracle](../protocol/price-oracle.md).
+Addax marks come from **DIA**. On LitVM testnet, feeds are **push**-updated with a **1%** deviation threshold and a **1h** heartbeat; mainnet is planned around DIA **pull** reports. The **Price Aggregator** consumes those feeds for each market. This page shows how to read marks for integrations. Full oracle design: [Price Oracle](../protocol/price-oracle.md).
 
 ## Market -> oracle key
 
-Each pair maps to an oracle key and a `pairIndex`:
+Each listed pair maps to an oracle key and a `pairIndex`:
 
 | Pair | pairIndex | Oracle key |
 |---|---|---|
@@ -12,12 +12,11 @@ Each pair maps to an oracle key and a `pairIndex`:
 | ETH | 1 | `ETH/USD` |
 | LTC | 2 | `LTC/USD` |
 | XAU | 3 | `XAU/USD` |
-| TSLA | 4 | `TSLA/USD` |
-| SPCX | 5 | `SPCX/USD` |
+| TSLA | 4 | `TSLA` |
+| SPCX | 5 | `SPCX` |
 | SOL | 6 | `SOL/USD` |
-| HYPE | 7 | `HYPE/USD` |
 
-Full list: [Pair List](../trading/pair-list.md).
+Equities use bare keys (`TSLA`, `SPCX`). Full DIA inventory (including assets not yet listed on Addax): [Price Oracle](../protocol/price-oracle.md). Pair metadata: [Pair List](../trading/pair-list.md).
 
 ## Reading from the DIA oracle
 
@@ -42,14 +41,14 @@ const DIA_ABI = [
 ] as const;
 
 const [value, timestamp] = await client.readContract({
- address: "0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb",
+ address: "0xEd7f45c29FE6676e1eB7096aD5D6966abd62Bd1a",
  abi: DIA_ABI,
  functionName: "getValue",
  args: ["BTC/USD"],
 });
 ```
 
-> Confirm the oracle interface and value scaling against the deployed contract, DIA-style feeds typically report 8-decimal values with a publish timestamp.
+> Confirm the oracle interface and value scaling against the deployed contract. DIA-style feeds typically report with a publish timestamp; check decimals on the live contract before hardcoding display math.
 
 ## Public REST API
 
