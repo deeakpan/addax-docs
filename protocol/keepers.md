@@ -26,7 +26,7 @@ Keeps the on-chain price feed fresh so the aggregator always has recent data whe
 
 ## Running keepers
 
-Reference implementations and setup live in **`addax_protocol/bots`**. Start from that repository: configure RPC access, a gas-funded signing wallet, keeper authorization (NFT), and any indexing/state settings the bots expect.
+Reference implementations and setup live in **[addax_protocol/bots](https://github.com/addax_protocol/bots)** on GitHub. Start from that repository: configure RPC access, a gas-funded signing wallet, keeper authorization (NFT), and any indexing/state settings the bots expect.
 
 You will need:
 

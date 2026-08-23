@@ -2,9 +2,9 @@
 
 Addax relies on keepers to keep prices fresh and to execute triggers that cannot self-fulfill: limit opens, take-profit, stop-loss, and liquidations. Anyone can run a keeper. Successful triggers earn a reward.
 
-## Start here: `addax_protocol/bots`
+## Start here: [addax_protocol/bots](https://github.com/addax_protocol/bots)
 
-Use the reference bots in the **`addax_protocol/bots`** repository. Clone that repo, follow its setup guide, and configure the required environment variables there. Keep keys and operator secrets out of public channels.
+Reference keeper bots live in the **[addax_protocol/bots](https://github.com/addax_protocol/bots)** GitHub repository. Clone that repo, follow its README, and configure the required environment variables there. Keep keys and operator secrets out of public channels.
 
 At a high level you will need:
 
@@ -14,7 +14,7 @@ At a high level you will need:
 - Access to the **keeper NFT** (or equivalent authorization) required by the trading contracts to initiate trigger orders.
 - Whatever **state/indexing** configuration the bots repo expects so your bot can discover open positions and pending limits efficiently.
 
-Exact variable names, ABIs, and helper modules live in `addax_protocol/bots`. Treat that repo as the source of truth.
+Exact variable names, ABIs, and helper modules are documented in [addax_protocol/bots](https://github.com/addax_protocol/bots). Treat that repo as the source of truth.
 
 ## What keepers do
 
