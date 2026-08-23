@@ -10,9 +10,9 @@ Scans open positions and pending limit orders against the live oracle price and 
 
 ```bash
 # in perps-keepers/
-npm start        # long-running watcher (WebSocket subscriptions + continuous scan)
-npm run once     # single scan+execute pass, then exit (good for cron)
-npm run db:init  # create Supabase tables from .env
+npm start # long-running watcher (WebSocket subscriptions + continuous scan)
+npm run once # single scan+execute pass, then exit (good for cron)
+npm run db:init # create Supabase tables from .env
 npm run db:reset # wipe and recreate keeper tables/cursors
 ```
 
@@ -21,8 +21,8 @@ npm run db:reset # wipe and recreate keeper tables/cursors
 1. Load open positions and pending limit orders (from the indexed mirror in Supabase).
 2. For each, compare against the current oracle price to decide if OPEN / TP / SL / LIQ conditions are met.
 3. Execute the **two-step trigger**:
-   - `executeNftOrder(orderType, …)` on Trading → emits `NftOrderInitiated`.
-   - `fulfillOrder` on the Price Aggregator → resolves price and completes the action.
+ - `executeNftOrder(orderType, ...)` on Trading -> emits `NftOrderInitiated`.
+ - `fulfillOrder` on the Price Aggregator -> resolves price and completes the action.
 4. Simulate first and skip known reverts (timelock not elapsed, condition invalid, already executed), then submit.
 
 ### Environment
@@ -31,7 +31,7 @@ Key `.env` values (see `perps-keepers/.env.example`):
 
 | Var | Purpose |
 |---|---|
-| `PERPS_RPC_URL` | LiteForge RPC (HTTP) |
+| `PERPS_RPC_URL` | LitVM RPC (HTTP) |
 | `PERPS_SYNC_MODE` | `websocket` (recommended) or `poll` |
 | `PERPS_POLL_INTERVAL_MS` | Scan interval when polling |
 | `KEEPER_PRIVATE_KEY` | Wallet that owns the keeper NFT and pays gas |
@@ -52,8 +52,8 @@ Keeps the price feed fresh so the aggregator always has recent data to fulfill a
 
 ```bash
 # in oracle-keeper/
-npm start     # long-running watch loop, pushes price updates on interval
-npm run once  # push a single update, then exit
+npm start # long-running watch loop, pushes price updates on interval
+npm run once # push a single update, then exit
 ```
 
 Configure `ORACLE_POLL_INTERVAL_MS` and the RPC/keeper credentials in `oracle-keeper/.env`.
@@ -64,16 +64,16 @@ Any wallet holding the keeper NFT can execute triggers permissionlessly and earn
 
 ```typescript
 for (const pos of openPositions) {
-  const price = await getOraclePrice(pos.pairIndex);
-  const kind = classify(pos, price); // "TP" | "SL" | "LIQ" | null
-  if (!kind) continue;
+ const price = await getOraclePrice(pos.pairIndex);
+ const kind = classify(pos, price); // "TP" | "SL" | "LIQ" | null
+ if (!kind) continue;
 
-  // simulate to skip known reverts
-  const ok = await simulate(() => trading.executeNftOrder(orderType(kind), ...));
-  if (!ok) continue;
+ // simulate to skip known reverts
+ const ok = await simulate(() => trading.executeNftOrder(orderType(kind), ...));
+ if (!ok) continue;
 
-  await trading.executeNftOrder(orderType(kind), pos.trader, pos.pairIndex, pos.index, nftId, nftType);
-  await priceAggregator.fulfillOrder(orderId, priceData);
+ await trading.executeNftOrder(orderType(kind), pos.trader, pos.pairIndex, pos.index, nftId, nftType);
+ await priceAggregator.fulfillOrder(orderId, priceData);
 }
 ```
 

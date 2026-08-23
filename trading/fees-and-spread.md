@@ -1,6 +1,6 @@
 # Fees & Spread
 
-Addax has a simple, transparent fee model. Because trades settle against a vault at the oracle price, there is no order-book slippage — your costs are the spread, an opening/closing fee, price impact, and time-based holding fees.
+Addax has a simple, transparent fee model. Because trades settle against a vault at the oracle price, there is no order-book slippage, your costs are the spread, an opening/closing fee, price impact, and time-based holding fees.
 
 ## Spread
 
@@ -14,11 +14,11 @@ A percentage fee on **position size** (notional), charged when you open and when
 - protocol/treasury allocation,
 - **keeper/trigger rewards** for executing orders.
 
-Because it's charged on notional (collateral × leverage), higher leverage means a higher absolute fee for the same collateral.
+Because it's charged on notional (collateral x leverage), higher leverage means a higher absolute fee for the same collateral.
 
 ## Price impact
 
-Large positions relative to the market's open interest incur **price impact** — a small adjustment to entry/exit price that scales with size and existing skew. This keeps long/short open interest balanced and protects the vault.
+Large positions relative to the market's open interest incur **price impact**: a small adjustment to entry/exit price that scales with size and existing skew. This keeps long/short open interest balanced and protects the vault.
 
 ## Borrowing / holding fees
 
@@ -29,10 +29,10 @@ Open positions accrue a **borrowing (holding) fee** over time, based on the mark
 Your net PnL when you close is roughly:
 
 ```
-PnL = (exit − entry) × direction × size
-      − openFee − closeFee
-      − accruedHoldingFees
-      ± priceImpact
+PnL = (exit − entry) x direction x size
+ − openFee − closeFee
+ − accruedHoldingFees
+ ± priceImpact
 ```
 
 For the on-chain fee parameters and where each fee is routed, see [Protocol Fees](../protocol/fees.md).

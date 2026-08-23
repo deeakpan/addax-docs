@@ -1,12 +1,12 @@
 # Integration Overview
 
-This section covers building on top of Addax — opening and managing trades programmatically, reading positions and prices, and running keeper bots.
+This section covers building on top of Addax, opening and managing trades programmatically, reading positions and prices, and running keeper bots.
 
 ## Sections
 
-- [Trading Contracts](./contracts.md) — interacting with the trading stack
-- [Fetching Prices](./fetching-prices.md) — reading mark/index prices and market stats
-- [Building Keeper Bots](./building-bots.md) — running the trigger and oracle keepers
+- [Trading Contracts](./contracts.md), interacting with the trading stack
+- [Fetching Prices](./fetching-prices.md), reading mark/index prices and market stats
+- [Building Keeper Bots](./building-bots.md), running the trigger and oracle keepers
 
 ## Quick references
 
@@ -21,4 +21,4 @@ This section covers building on top of Addax — opening and managing trades pro
 
 ## The stacks
 
-Each collateral (USDC, ADDX, WzkLTC) has its own set of contracts. For most integrations, target the **gUSDC stack** — it is the primary UI and keeper stack. Read state from **Storage**, write via **Trading**, and read fee/leverage params from **Pair Infos**.
+Each collateral (USDC, ADDX, WzkLTC) has its own set of contracts. For most integrations, target the **gUSDC stack**: it is the primary UI and keeper stack. Read state from **Storage**, write via **Trading**, and read fee/leverage params from **Pair Infos**.

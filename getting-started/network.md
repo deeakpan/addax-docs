@@ -1,12 +1,12 @@
 # Network & Setup
 
-Addax is deployed on **LitVM LiteForge** — a testnet chain built on the LitVM stack.
+Addax is deployed on **LitVM**.
 
 ## Network details
 
 | Parameter | Value |
 |---|---|
-| Network name | LitVM LiteForge |
+| Network name | LitVM |
 | Chain ID | `4441` |
 | RPC (HTTP) | `https://liteforge.rpc.caldera.xyz/http` |
 | RPC (WebSocket) | `wss://liteforge.rpc.caldera.xyz/ws` |
@@ -15,11 +15,11 @@ Addax is deployed on **LitVM LiteForge** — a testnet chain built on the LitVM 
 
 ## Adding to MetaMask
 
-Open MetaMask → Settings → Networks → Add Network, and fill in the values above. Or connect your wallet at the Addax app and approve the "Add network" prompt automatically.
+Open MetaMask -> Settings -> Networks -> Add Network, and fill in the values above. Or connect your wallet at the Addax app and approve the "Add network" prompt automatically.
 
 ## What you need to trade
 
-1. **zkLTC** for gas — claim it from the LiteForge faucet (see [Get Testnet zkLTC](faucet.md)).
-2. **Collateral** — USDC, ADDX, or zkLTC to use as margin. See [Collateral & Tokens](tokens.md).
+1. **zkLTC** for gas, claim it from the LitVM faucet (see [Get Testnet zkLTC](faucet.md)).
+2. **Collateral**: USDC, ADDX, or zkLTC to use as margin. See [Collateral & Tokens](tokens.md).
 
 Once your wallet is connected and funded, head to [Setting Up to Trade](setting-up-to-trade.md).

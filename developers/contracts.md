@@ -24,27 +24,27 @@ import { privateKeyToAccount } from "viem/accounts";
 // trader, pairIndex, index, initialPosToken, positionSizeCollateral,
 // openPrice, buy, leverage, tp, sl
 const trade = {
-  trader: account.address,
-  pairIndex: 0n,          // BTC — see Pair List
-  index: 0n,
-  initialPosToken: 0n,
-  positionSizeDai: 100_000000n, // 100 USDC (6 decimals)
-  openPrice: markPrice,   // 1e10-scaled price
-  buy: true,              // long
-  leverage: 50n,          // 50x
-  tp: 0n,                 // optional take-profit price
-  sl: 0n,                 // optional stop-loss price
+ trader: account.address,
+ pairIndex: 0n, // BTC, see Pair List
+ index: 0n,
+ initialPosToken: 0n,
+ positionSizeDai: 100_000000n, // 100 USDC (6 decimals)
+ openPrice: markPrice, // 1e10-scaled price
+ buy: true, // long
+ leverage: 50n, // 50x
+ tp: 0n, // optional take-profit price
+ sl: 0n, // optional stop-loss price
 };
 
 // orderType: 0 = MARKET, 1 = LIMIT (open)
 await trading.write.openTrade([trade, orderType, spreadReductionId, slippageP, referrer]);
 ```
 
-> Confirm the exact struct field order and price scaling against the deployed ABI before sending funds — layouts differ slightly between gTrade versions.
+> Confirm the exact struct field order and price scaling against the deployed ABI before sending funds, layouts differ slightly between gTrade versions.
 
 ## Placing & canceling a limit order
 
-Open a limit by calling `openTrade` with the LIMIT order type — the order is stored on-chain until a keeper executes it. Cancel it with:
+Open a limit by calling `openTrade` with the LIMIT order type, the order is stored on-chain until a keeper executes it. Cancel it with:
 
 ```typescript
 await trading.write.cancelOpenLimitOrder([pairIndex, index]);
@@ -74,7 +74,7 @@ Limit, TP, SL, and liquidation are executed in two steps by keepers:
 
 ```typescript
 // 1. Initiate the pending NFT order on Trading
-//    orderType: TP / SL / LIQ / OPEN
+// orderType: TP / SL / LIQ / OPEN
 await trading.write.executeNftOrder([orderType, trader, pairIndex, index, nftId, nftType]);
 
 // 2. Resolve the price on the aggregator to complete it

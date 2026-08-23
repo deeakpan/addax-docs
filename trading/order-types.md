@@ -7,7 +7,7 @@ Addax supports four order types. Market and limit orders **open** positions; tak
 Opens a position immediately at the current oracle mark price (adjusted by spread and price impact). Use this when you want to enter now.
 
 - Executes in the same transaction as your submission.
-- No waiting — subject only to the live price.
+- No waiting, subject only to the live price.
 
 ## Limit order
 
@@ -22,7 +22,7 @@ Opens a position only when the market reaches a price you specify. Use this to e
 
 An automatic close order that locks in profit once price reaches your target. Attach it when opening a trade or add it later to a live position.
 
-- Optional — leave it blank and it simply won't trigger.
+- Optional, leave it blank and it simply won't trigger.
 - Executed by a keeper when the mark price reaches the TP level.
 
 ## Stop-loss (SL)
@@ -41,7 +41,7 @@ Not a user order, but the protocol's safety mechanism. If a position's losses co
 
 Limit, TP, SL, and liquidation are **two-step** on-chain actions:
 
-1. A keeper calls `executeNftOrder(orderType, …)` on the trading contract, which initiates a pending NFT order and emits `NftOrderInitiated`.
+1. A keeper calls `executeNftOrder(orderType, ...)` on the trading contract, which initiates a pending NFT order and emits `NftOrderInitiated`.
 2. A `fulfillOrder` call on the price aggregator then resolves the price and completes the open or close.
 
-Market orders are self-fulfilling — the open/close and price fulfillment happen in a single transaction. See [Keepers](../protocol/keepers.md) and [Trading Contracts](../developers/contracts.md) for details.
+Market orders are self-fulfilling, the open/close and price fulfillment happen in a single transaction. See [Keepers](../protocol/keepers.md) and [Trading Contracts](../developers/contracts.md) for details.

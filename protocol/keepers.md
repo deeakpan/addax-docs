@@ -8,15 +8,15 @@ Addax runs two keeper roles:
 
 The trigger keeper scans open positions and pending limit orders against the live oracle price and executes anything whose conditions are met:
 
-- **OPEN** — a pending limit order whose target price is reached.
-- **TP** — a position that hit its take-profit.
-- **SL** — a position that hit its stop-loss.
-- **LIQ** — a position past its liquidation threshold.
+- **OPEN**: a pending limit order whose target price is reached.
+- **TP**: a position that hit its take-profit.
+- **SL**: a position that hit its stop-loss.
+- **LIQ**: a position past its liquidation threshold.
 
 For each, the keeper performs the **two-step trigger**:
 
-1. `executeNftOrder(orderType, …)` on the Trading contract — initiates the pending NFT order (emits `NftOrderInitiated`).
-2. `fulfillOrder` on the Price Aggregator — resolves the price and completes the open/close via Callbacks.
+1. `executeNftOrder(orderType, ...)` on the Trading contract, initiates the pending NFT order (emits `NftOrderInitiated`).
+2. `fulfillOrder` on the Price Aggregator, resolves the price and completes the open/close via Callbacks.
 
 The keeper simulates the transaction first and skips known revert reasons (e.g. timelock not elapsed, condition no longer valid), then submits. Successful triggers earn the keeper a reward.
 
@@ -24,17 +24,17 @@ The keeper simulates the transaction first and skips known revert reasons (e.g. 
 
 The keeper lives in `perps-keepers`:
 
-- `npm start` — long-running watcher. Subscribes to live events over WebSocket, catches up missed logs on startup (best-effort, non-blocking), and continuously scans + executes triggers.
-- `npm run once` — single pass: scan once, execute what's due, exit. Useful for cron-style runs.
-- `npm run db:init` — create the keeper's Supabase tables from your `.env`.
-- `npm run db:reset` — wipe and recreate keeper tables/cursors.
+- `npm start`, long-running watcher. Subscribes to live events over WebSocket, catches up missed logs on startup (best-effort, non-blocking), and continuously scans + executes triggers.
+- `npm run once`, single pass: scan once, execute what's due, exit. Useful for cron-style runs.
+- `npm run db:init`, create the keeper's Supabase tables from your `.env`.
+- `npm run db:reset`, wipe and recreate keeper tables/cursors.
 
 ## 2. Oracle keeper
 
 The oracle keeper keeps the price feed fresh so the aggregator always has recent data to fulfill against. It lives in `oracle-keeper`:
 
-- `npm start` — long-running watch loop that pushes price updates on the configured interval.
-- `npm run once` — push a single update and exit.
+- `npm start`, long-running watch loop that pushes price updates on the configured interval.
+- `npm run once`, push a single update and exit.
 
 ## State & indexing
 

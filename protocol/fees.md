@@ -18,9 +18,9 @@ All per-pair fee parameters (spread, fee percentages, borrowing rates, leverage 
 
 Opening and closing fees are split between:
 
-- **gToken vault** — accrues to liquidity providers as increased assets per share.
-- **Protocol / treasury** — protocol-controlled allocation.
-- **Keeper / trigger rewards** — pays the keepers that execute limit, TP, SL, and liquidation orders.
+- **gToken vault**: accrues to liquidity providers as increased assets per share.
+- **Protocol / treasury**: protocol-controlled allocation.
+- **Keeper / trigger rewards**: pays the keepers that execute limit, TP, SL, and liquidation orders.
 
 Borrowing/holding fees and net trader losses accrue to the vault, which is the counterparty to all trades.
 

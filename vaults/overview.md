@@ -18,8 +18,8 @@ Each collateral has its own vault and its own trading stack:
 
 When you deposit, you mint gTokens whose value tracks the vault's assets per share:
 
-- **Trading fees** — a portion of every open/close fee flows to the vault, increasing assets per share.
-- **Trader PnL** — the vault is the counterparty to traders. When traders net lose, the vault gains; when traders net win, the vault pays out.
+- **Trading fees**: a portion of every open/close fee flows to the vault, increasing assets per share.
+- **Trader PnL**: the vault is the counterparty to traders. When traders net lose, the vault gains; when traders net win, the vault pays out.
 
 Your gToken balance stays constant, but each gToken becomes redeemable for more (or fewer) underlying tokens over time. Your return is the change in **assets per share** between deposit and withdrawal.
 

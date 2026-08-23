@@ -1,6 +1,6 @@
 # Contracts & Addresses
 
-Addax perpetuals are deployed on **LitVM LiteForge** (chain ID `4441`). Each collateral has its own **stack**. Addresses below match the LiteForge deployment manifest (`contracts/deployments/liteforge-gtrade.json`).
+Addax perpetuals are deployed on **LitVM** (chain ID `4441`). Each collateral has its own **stack**. Addresses below match the LitVM deployment manifest (`contracts/deployments/liteforge-gtrade.json`).
 
 ## Network
 
@@ -24,7 +24,7 @@ Addax perpetuals are deployed on **LitVM LiteForge** (chain ID `4441`). Each col
 
 | | Address |
 |---|---|
-| DIA / Addax price feed (LiteForge) | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` |
+| DIA / Addax price feed (testnet) | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` |
 | Official DIA reference | `0xE7F65d4bAdcfABc4eA57B8F66bBa044363D89eec` |
 
 **Testnet oracle policy:** DIA **push** feeds with **0.1%** deviation (see [Price Oracle](price-oracle.md)). **Mainnet** is planned to use DIA **pull** delivery.
@@ -94,7 +94,7 @@ Addax perpetuals are deployed on **LitVM LiteForge** (chain ID `4441`). Each col
 
 ## Notes
 
-- Prefer the **gUSDC stack** for most integrations — it is the primary UI and keeper stack.
+- Prefer the **gUSDC stack** for most integrations, it is the primary UI and keeper stack.
 - **Trading** is the write entry point; **Storage** is the canonical read source; **Pair Infos** holds per-pair fee/leverage params.
 - Testnet deployments can be redeployed; always confirm addresses against the live app or the deployment manifest before sending funds.
 - Protocol event indexing is provided via **[Goldsky](https://goldsky.com/)** subgraphs (see [Architecture Overview](overview.md)).

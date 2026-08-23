@@ -22,8 +22,8 @@ Staking ADDX allocates your tokens to the staking contract, which distributes re
 
 Don't confuse the two:
 
-- **Staking ADDX** → deposits ADDX into the staking contract for protocol rewards.
-- **gADDX vault** → deposits ADDX as *trading liquidity*, taking the other side of ADDX-collateralized trades (see [gToken Vaults](overview.md)).
+- **Staking ADDX** -> deposits ADDX into the staking contract for protocol rewards.
+- **gADDX vault** -> deposits ADDX as *trading liquidity*, taking the other side of ADDX-collateralized trades (see [gToken Vaults](overview.md)).
 
 Both use ADDX but serve different roles and carry different risk/return profiles.
 

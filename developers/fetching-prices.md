@@ -1,8 +1,8 @@
 # Fetching Prices
 
-Addax marks come from **[DIA](https://www.diadata.org/)**. On LiteForge testnet, feeds are **push**-updated with a **0.1%** deviation threshold; mainnet is planned around DIA **pull** reports. The **Price Aggregator** consumes those feeds for each market. This page shows how to read marks for integrations. Full oracle design: [Price Oracle](../protocol/price-oracle.md).
+Addax marks come from **[DIA](https://www.diadata.org/)**. On LitVM testnet, feeds are **push**-updated with a **0.1%** deviation threshold; mainnet is planned around DIA **pull** reports. The **Price Aggregator** consumes those feeds for each market. This page shows how to read marks for integrations. Full oracle design: [Price Oracle](../protocol/price-oracle.md).
 
-## Market → oracle key
+## Market -> oracle key
 
 Each pair maps to an oracle key and a `pairIndex`:
 
@@ -29,27 +29,27 @@ import { createPublicClient, http } from "viem";
 const client = createPublicClient({ transport: http("https://liteforge.rpc.caldera.xyz/http") });
 
 const DIA_ABI = [
-  {
-    type: "function",
-    name: "getValue",
-    stateMutability: "view",
-    inputs: [{ name: "key", type: "string" }],
-    outputs: [
-      { name: "value", type: "uint128" },
-      { name: "timestamp", type: "uint128" },
-    ],
-  },
+ {
+ type: "function",
+ name: "getValue",
+ stateMutability: "view",
+ inputs: [{ name: "key", type: "string" }],
+ outputs: [
+ { name: "value", type: "uint128" },
+ { name: "timestamp", type: "uint128" },
+ ],
+ },
 ] as const;
 
 const [value, timestamp] = await client.readContract({
-  address: "0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb",
-  abi: DIA_ABI,
-  functionName: "getValue",
-  args: ["BTC/USD"],
+ address: "0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb",
+ abi: DIA_ABI,
+ functionName: "getValue",
+ args: ["BTC/USD"],
 });
 ```
 
-> Confirm the oracle interface and value scaling against the deployed contract — DIA-style feeds typically report 8-decimal values with a publish timestamp.
+> Confirm the oracle interface and value scaling against the deployed contract, DIA-style feeds typically report 8-decimal values with a publish timestamp.
 
 ## App REST endpoints
 
@@ -66,4 +66,4 @@ These are the simplest way to display prices and positions without wiring up ora
 
 ## Mark vs execution price
 
-The oracle returns the **mark price**. Execution applies **spread** (and price impact for large size) on top — longs open slightly above mark, shorts slightly below. Pull spread/fee parameters from the **Pair Infos** contract. See [Fees & Spread](../trading/fees-and-spread.md).
+The oracle returns the **mark price**. Execution applies **spread** (and price impact for large size) on top, longs open slightly above mark, shorts slightly below. Pull spread/fee parameters from the **Pair Infos** contract. See [Fees & Spread](../trading/fees-and-spread.md).

@@ -7,7 +7,7 @@ gToken vaults follow an ERC-4626-style deposit/withdraw model. You deposit the u
 1. Go to the **Vaults** page and pick a vault (gUSDC, gzKLTC, or gADDX).
 2. Enter the amount of the underlying asset to deposit.
 3. **Approve** the vault to spend your tokens (one-time per token).
-   - For the gzKLTC vault you can deposit **native zkLTC** (wrapped automatically) or **WzkLTC** directly.
+ - For the gzKLTC vault you can deposit **native zkLTC** (wrapped automatically) or **WzkLTC** directly.
 4. Confirm the deposit. You receive gTokens representing your share of the vault.
 
 ```solidity
@@ -20,7 +20,7 @@ gToken.deposit(assets, receiver); // returns shares minted
 Your gToken balance is fixed, but redemption value changes with the vault's **assets per share**:
 
 ```
-withdrawable = shares × (totalAssets / totalSupply)
+withdrawable = shares x (totalAssets / totalSupply)
 ```
 
 As the vault collects fees and trader losses, assets per share rises; when traders win, it can fall.

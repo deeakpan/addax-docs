@@ -1,6 +1,6 @@
 # Asset Classes
 
-Addax lists markets across several asset classes. All are traded the same way — synthetically, against the collateral vault, at the oracle mark price — but they differ in trading hours behavior, volatility, and typical max leverage.
+Addax lists markets across several asset classes. All are traded the same way, synthetically, against the collateral vault, at the oracle mark price, but they differ in trading hours behavior, volatility, and typical max leverage.
 
 ## Crypto
 
@@ -22,4 +22,4 @@ Individual stocks such as **Tesla (TSLA)** and pre-IPO/private names like **Spac
 | Typical max leverage | Highest | Medium | Lowest |
 | Volatility | High | Medium | Varies |
 
-Max leverage and spread are set **per pair** on-chain — always check the live values in the app or the [Pair List](pair-list.md). For how prices are sourced across classes, see [Price Oracle](../protocol/price-oracle.md).
+Max leverage and spread are set **per pair** on-chain, always check the live values in the app or the [Pair List](pair-list.md). For how prices are sourced across classes, see [Price Oracle](../protocol/price-oracle.md).

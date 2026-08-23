@@ -1,10 +1,10 @@
 # Get Testnet zkLTC
 
-`zkLTC` is the native gas token on LitVM LiteForge. You need a small amount to pay for transactions (opening/closing trades, approvals, vault deposits).
+`zkLTC` is the native gas token on LitVM. You need a small amount to pay for transactions (opening/closing trades, approvals, vault deposits).
 
 ## Claim from the faucet
 
-Go to the LiteForge faucet at [liteforge.hub.caldera.xyz](https://liteforge.hub.caldera.xyz/), connect your wallet, and request testnet zkLTC.
+Go to the LitVM faucet at [liteforge.hub.caldera.xyz](https://liteforge.hub.caldera.xyz/), connect your wallet, and request testnet zkLTC.
 
 ## Using zkLTC as collateral
 
@@ -12,9 +12,9 @@ Gas aside, you can also trade with zkLTC as margin. Because margin must be an ER
 
 ```typescript
 const wzkLTC = new ethers.Contract(
-  "0xA52F83592b9216C574e11324d4468F078aEA05BE",
-  ["function deposit() payable", "function withdraw(uint256)"],
-  signer
+ "0xA52F83592b9216C574e11324d4468F078aEA05BE",
+ ["function deposit() payable", "function withdraw(uint256)"],
+ signer
 );
 
 // Wrap 1 zkLTC -> 1 WzkLTC
