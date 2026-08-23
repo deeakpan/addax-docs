@@ -1,6 +1,6 @@
 # Contracts & Addresses
 
-Addax is deployed on **LitVM LiteForge** (chain ID `4441`). Each collateral has its own **stack** of contracts. Addresses below are the current LiteForge deployment; the app can override them per-environment via `NEXT_PUBLIC_PERPS_*` variables.
+Addax perpetuals are deployed on **LitVM LiteForge** (chain ID `4441`). Each collateral has its own **stack**. Addresses below match the LiteForge deployment manifest (`contracts/deployments/liteforge-gtrade.json`).
 
 ## Network
 
@@ -9,53 +9,92 @@ Addax is deployed on **LitVM LiteForge** (chain ID `4441`). Each collateral has 
 | Chain ID | `4441` |
 | RPC | `https://liteforge.rpc.caldera.xyz/http` |
 | Explorer | `https://liteforge.explorer.caldera.xyz` |
-| Deploy block (indexing) | `24989478` |
+| Deploy block (indexing) | `38095768` |
+| Deployed at | `2026-08-08` |
 
 ## Tokens
 
 | Token | Address | Decimals |
 |---|---|---|
-| USDC | `0xA6b7A782Fc4349914dADde5b8A8A8B1daDFBF6DB` | 6 |
+| USDC (AddaxUSDC) | `0xA6b7A782Fc4349914dADde5b8A8A8B1daDFBF6DB` | 6 |
 | ADDX | `0xf6078Be81aBCC95BAC306356963E7adB986783f9` | 18 |
 | WzkLTC | `0xA52F83592b9216C574e11324d4468F078aEA05BE` | 18 |
+
+## Oracle & feeds
+
+| | Address |
+|---|---|
+| DIA / Addax price feed (LiteForge) | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` |
+| Official DIA reference | `0xE7F65d4bAdcfABc4eA57B8F66bBa044363D89eec` |
+
+**Testnet oracle policy:** DIA **push** feeds with **0.1%** deviation (see [Price Oracle](price-oracle.md)). **Mainnet** is planned to use DIA **pull** delivery.
+
+### Per-market feed adapters
+
+| Market | Feed adapter |
+|---|---|
+| BTC | `0x1906AA2bAf29c79b8FDC604fF64be7e8A4030204` |
+| ETH | `0x7a413cdc7005Ae2e3fD66483339B07ab4B0043d6` |
+| LTC | `0x280CcB394DE0C1FAA988d0e066EbDA631eD3D41A` |
+| XAU | `0xd2640f29cFaBD5521630bF4E68E5Cff8e31DC776` |
+| TSLA | `0x8E307ac0512B10a7Dd2ADDfBc357f64CfC51cA78` |
+| SPCX | `0x122B459B3255C09856Db46c55B5B8de2422E60f5` |
+| SOL | `0x1ef45191447F216f5C0b81b2b6f41cb38292dd00` |
+| HYPE | `0xc2CC73b547f6F3ffAA40C49fE2Cb41aB494AB429` |
+
+## Vaults (gTokens)
+
+| Vault | Address |
+|---|---|
+| gUSDC | `0xbA68d137F6AaD10a7490DDb94bbd718f59b6A1C6` |
+| gWzkLTC | `0x7Fc5B0Bd106e124B4fCC5a6add01224E63605ba8` |
+| gADDX | `0xbF39Acc7f4CEe52d9C02fF66B388761Cb1F941bf` |
 
 ## gUSDC stack (primary)
 
 | Contract | Address |
 |---|---|
-| Storage | `0xe4D06BeE42d9B8CbF3d95520dCC2E522bF67D2a3` |
-| Trading | `0x6F23a6500a211F1fC9684672C70952C8a6221b1B` |
-| Callbacks | `0x62920E443abFEFb91126FAC8F4D2e1Db60aA5341` |
-| Pair Infos | `0xc491c999eB5734eCFBe0E3AAc32DED28CA3259B7` |
-| Price Aggregator | `0x3f0fA5CeC8B45111777baB68E37155ca0edC6400` |
-| Vault (gUSDC) | `0x1e40483dee13E72c6E9d412989D408f00e75dbEF` |
-| DIA Oracle | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` |
+| Storage | `0xEEC2067f8a310B2b09f9b97eC4c5247250D2c712` |
+| Trading | `0x468A8eFB014bc7784C3BD1F6F3a7cf7feB07B1e8` |
+| Callbacks | `0xE698737D9C37F455F8afc3f1574B5f19CEDd086C` |
+| Pair Infos | `0xa574dAE7EbF8cA56a9AC80932bFf9862C6D62FFC` |
+| Pairs Storage | `0xDbE5E61408698356E2687B6504A0f7144a5C262c` |
+| Price Aggregator | `0xA184242a075bEA7012Ce83BD86f3E56a9bc33A73` |
+| Vault (gUSDC) | `0xbA68d137F6AaD10a7490DDb94bbd718f59b6A1C6` |
+| NFT | `0xADeE0A7572D40cC110b900fFa24d6C0A96907f46` |
+| NFT Rewards | `0xCb809166FfA8B50B736A838a5877B38B9CdB0806` |
+| Pool | `0x2acc3625eCEb8A1C651Cb0ac783594cC054f2227` |
 | Staking | `0xA0961eE578d708837225012fb13b7b6f0dF5Ec15` |
 
-## gzKLTC stack
+## gWzkLTC stack
 
 | Contract | Address |
 |---|---|
-| Storage | `0x0bab0C9354392989a20Ad3D739Bd1dE30cC82B1F` |
-| Trading | `0x63Ea6b78E663a296b1A86A9Db684F008aCD88f01` |
-| Callbacks | `0x17D04b545b80deA3F60295C70Fb35485aB7bac68` |
-| Pair Infos | `0x93Fd0177f0b03891D5A114E261DDA53fB8b7b032` |
-| Price Aggregator | `0x182A16a127cfD8a1b4EaE0a5653df467B3E6456E` |
-| Vault (gzKLTC) | `0xBE154C61Ddb666Da4B9c63d56E21D7E6f7355FF4` |
+| Storage | `0x9251e3fCE75bdeB0425158de14d44d97be04036D` |
+| Trading | `0x97E09a9533f8D6c701F4fa88a0d1130DdC1576a4` |
+| Callbacks | `0x33e6A62527222b0329486e8f1a3Cd07Fe994Bc4a` |
+| Pair Infos | `0xce9adD3D6872D9476BDEFAA343417B46e09a6F7b` |
+| Pairs Storage | `0x3111D14C6df9f0d5600a2A532501cbd36410ce7F` |
+| Price Aggregator | `0x9fADa5a5D2FA70Bd9D31bA72003b011D860Ed76c` |
+| Vault (gWzkLTC) | `0x7Fc5B0Bd106e124B4fCC5a6add01224E63605ba8` |
+| NFT Rewards | `0x325360Fe9bd3CE8e87adE61ECea308E3e4e234eb` |
 
 ## gADDX stack
 
 | Contract | Address |
 |---|---|
-| Storage | `0xfa63B98b6feEBD766d8863b25d2dc0d5c668b8Ad` |
-| Trading | `0x498771e39066926D424B7fB939D93F61bad3E040` |
-| Callbacks | `0xe3E60155b444356C14E9A0088A1882a6F9430B49` |
-| Pair Infos | `0xb82c0b371233588ee72c841eb6178D87d57F89Ce` |
-| Price Aggregator | `0x61af9FBbEA6D011Cea8d1FE6c674f89bD8eF5D8F` |
-| Vault (gADDX) | `0x634767abA7e823D1B995c40acC68389e1A8D642E` |
+| Storage | `0xa030b6174aeC909c6C5c22e7A08BEDDE5C584EF4` |
+| Trading | `0x81e33163684f95b67b6dB84bae3875B34704f386` |
+| Callbacks | `0xB631665892b61864c0BC6098CAfE3C2F174326A9` |
+| Pair Infos | `0x89e53e0Ad13090bf53fAf9A0DAf707C511A3c831` |
+| Pairs Storage | `0xCD15A63a63C8f6C068BA171B01a833813278D986` |
+| Price Aggregator | `0x2e9F4F9fBb5BF483e523C864ecf6614383A38Dbf` |
+| Vault (gADDX) | `0xbF39Acc7f4CEe52d9C02fF66B388761Cb1F941bf` |
+| NFT Rewards | `0xB4076F11684CFE2FEB01D0694b8b1c4046a45d52` |
 
 ## Notes
 
-- Use the **gUSDC stack** for most integrations — it is the primary UI and keeper stack.
-- The **Trading** contract is the write entry point; **Storage** is the canonical read source; **Pair Infos** holds per-pair fee/leverage params. See [Trading Contracts](../developers/contracts.md).
-- Always verify addresses against the live app configuration before sending funds; testnet deployments can be redeployed.
+- Prefer the **gUSDC stack** for most integrations — it is the primary UI and keeper stack.
+- **Trading** is the write entry point; **Storage** is the canonical read source; **Pair Infos** holds per-pair fee/leverage params.
+- Testnet deployments can be redeployed; always confirm addresses against the live app or the deployment manifest before sending funds.
+- Protocol event indexing is provided via **[Goldsky](https://goldsky.com/)** subgraphs (see [Architecture Overview](overview.md)).

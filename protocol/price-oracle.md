@@ -1,26 +1,62 @@
 # Price Oracle
 
-Addax is an oracle-priced protocol: every open, close, and trigger settles at a price resolved from an on-chain oracle rather than from an order book. This page explains where prices come from and how they enter the trading contracts.
+Addax settles every open, close, and trigger against an **on-chain oracle mark**, not an order book. Pricing is provided by **[DIA](https://www.diadata.org/)** — a widely used oracle network that delivers transparent, multi-source market data to smart contracts.
 
-## Sources
+<p align="left">
+  <a href="https://www.diadata.org/">
+    <img src="https://avatars.githubusercontent.com/u/42144424?s=120&v=4" alt="DIA" width="48" height="48" />
+  </a>
+</p>
 
-| Piece | Address / key | Role |
-|---|---|---|
-| **Price Aggregator** | `0x3f0fA5CeC8B45111777baB68E37155ca0edC6400` (gUSDC stack) | Resolves prices and `fulfillOrder`s pending requests |
-| **DIA Oracle** | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` | Underlying price feed |
-| **Oracle keys** | e.g. `BTC/USD`, `ETH/USD`, `XAU/USD` | Per-pair feed identifiers |
+[DIA](https://www.diadata.org/) · [Brand assets](https://www.diadata.org/brand-assets/)
 
-Each market maps to an oracle key (see the [Pair List](../trading/pair-list.md)). The aggregator reads the DIA feed for that key when a price is requested.
+## Why DIA
 
-## How pricing flows into a trade
+Rather than operating a custom price pipeline as the long-term source of truth, Addax relies on an established oracle provider. DIA aggregates first-party and exchange data and publishes feeds that trading contracts can read (or consume via signed updates) with clear freshness and integrity guarantees.
 
-1. **Market orders** request a price and settle in the same transaction — the aggregator returns the current mark price and Callbacks applies it immediately.
-2. **Limit / TP / SL / LIQ** orders are initiated by a keeper (`executeNftOrder`), then a `fulfillOrder` call on the aggregator resolves the price and completes the action.
+## Testnet — push feeds (0.1% deviation)
 
-## Mark price and spread
+On **LitVM LiteForge testnet**, markets are driven by DIA **push** feeds:
 
-The oracle provides the **mark price**. On top of it, each pair applies a **spread** (and price impact for large size) so that longs open slightly above and shorts slightly below mark. This spread compensates the vault and is configured per pair in **Pair Infos**. See [Fees & Spread](../trading/fees-and-spread.md).
+| Parameter | Value |
+|---|---|
+| Model | Push (on-chain storage updated by DIA) |
+| Deviation threshold | **0.1%** |
+| Heartbeat | Periodic forced refresh (alongside deviation) |
+| Consumer API | Contracts read the latest published value (e.g. `getValue`) |
 
-## The oracle keeper
+A push feed updates when the aggregated price moves by at least the deviation threshold, or when the heartbeat interval elapses. Between updates, the last written price is what settlement uses — subject to protocol-side staleness checks.
 
-Feed freshness is maintained by an **oracle keeper** — an off-chain process that pushes updated prices on a schedule so the aggregator always has recent data to fulfill against. See [Keepers](keepers.md) for how the oracle keeper and trigger keeper run.
+This configuration matches a common pattern among perpetual protocols that prefer simple on-chain reads during testnet and early production while still keeping marks reasonably tight.
+
+## Mainnet — pull feeds
+
+On **mainnet**, Addax plans to use DIA **pull** oracles:
+
+- Prices are signed off-chain by the oracle network.
+- A fresh report is submitted and verified **in the same transaction** as the trade action (open, close, or liquidation).
+- Staleness and signer quorum are enforced on-chain at consumption time.
+
+Pull delivery prioritizes mark freshness at the moment of execution — the usual requirement for leveraged markets at scale.
+
+## How prices enter a trade
+
+1. **Market orders** request a mark and settle in the same transaction once a valid price is available.
+2. **Limit / TP / SL / liquidation** flows are started on-chain, then completed when a valid oracle price is applied (via the price aggregator / callbacks path).
+
+The oracle supplies the **mark**. Each pair may still apply a **spread** (and size-based impact) so longs open slightly above mark and shorts slightly below. See [Fees & Spread](../trading/fees-and-spread.md).
+
+## Feed registry (testnet)
+
+| Role | Address |
+|---|---|
+| DIA / Addax price feed (LiteForge) | `0xFf856a958eFA7965A4dFC2BFb09dDbc9EABe9aAb` |
+| Price aggregator (gUSDC) | `0xA184242a075bEA7012Ce83BD86f3E56a9bc33A73` |
+
+Per-market keys and Chainlink-style feed adapters are listed with the deployment in [Contracts & Addresses](contracts.md).
+
+## Related
+
+- [Architecture Overview](overview.md) — how the aggregator sits in the stack  
+- [Keepers](keepers.md) — who drives triggers once a price is available  
+- [Fetching Prices](../developers/fetching-prices.md) — reading marks for integrations  

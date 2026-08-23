@@ -4,6 +4,8 @@ Addax is a decentralized leveraged trading platform on **LitVM LiteForge**. Trad
 
 Addax uses a synthetic, oracle-priced trading model: instead of matching buyers and sellers, trades settle against a collateral vault at the oracle mark price. This lets Addax offer deep, uniform liquidity across every market and low, predictable fees.
 
+Marks are supplied by **[DIA](https://www.diadata.org/)**. On-chain trading activity is indexed with **[Goldsky](https://goldsky.com/)**. See [Architecture](protocol/overview.md) and [Price Oracle](protocol/price-oracle.md) for how the stack is put together.
+
 ## What you can do
 
 | | |

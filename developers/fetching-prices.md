@@ -1,6 +1,6 @@
 # Fetching Prices
 
-Addax prices come from the on-chain **Price Aggregator**, which reads the **DIA oracle** feed for each market. This page shows how to read mark prices and market data for integrations.
+Addax marks come from **[DIA](https://www.diadata.org/)**. On LiteForge testnet, feeds are **push**-updated with a **0.1%** deviation threshold; mainnet is planned around DIA **pull** reports. The **Price Aggregator** consumes those feeds for each market. This page shows how to read marks for integrations. Full oracle design: [Price Oracle](../protocol/price-oracle.md).
 
 ## Market → oracle key
 
