@@ -85,9 +85,4 @@ See [Building Keeper Bots](building-bots.md) for a full, robust implementation, 
 
 ## ABIs
 
-The app and keepers keep trimmed ABIs in the repo:
-
-- Frontend: `lib/perps/abi.ts`
-- Keepers: `perps-keepers/src/lib/abis.ts`
-
-These expose the exact function and event fragments Addax uses (`openTrade`, `cancelOpenLimitOrder`, `executeNftOrder`, `fulfillOrder`, `hasOpenLimitOrder`, `getOpenLimitOrder`, plus lifecycle events like `NftOrderInitiated`, `OpenLimitPlaced/Updated/Canceled`, and callback events).
+Use the ABIs and helpers shipped with **`addax_protocol/bots`** (and your own contract artifacts) for keeper and integration work. The trading surface you need typically includes `openTrade`, `cancelOpenLimitOrder`, `executeNftOrder`, `fulfillOrder`, open-limit getters, and lifecycle events such as pending-order initiation, limit placed/updated/canceled, and callback settlement events.

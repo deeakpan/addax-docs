@@ -31,8 +31,8 @@ Addax does not use a traditional order book. Instead it settles trades synthetic
 
 - **Self-custody**: you always control your collateral through your own wallet.
 - **On-chain settlement**: positions, orders, and PnL are enforced by smart contracts.
-- **Oracle pricing**: marks come from **[DIA](https://www.diadata.org/)** (push feeds at 0.1% deviation on testnet; pull planned for mainnet), not from an internal book.
-- **Indexed history**: protocol activity is indexed with **[Goldsky](https://goldsky.com/)** for reliable off-chain reads of trading events.
+- **Oracle pricing**: marks come from **DIA** (push feeds at 0.1% deviation on testnet; pull planned for mainnet), not from an internal book.
+- **Indexed history**: protocol activity is indexed with **Goldsky** for reliable off-chain reads of trading events.
 - **Permissionless keepers**: anyone can run a keeper to execute triggers and earn rewards.
 
 Continue to [Network & Setup](network.md) to connect your wallet.

@@ -17,7 +17,8 @@ This section covers building on top of Addax, opening and managing trades progra
 | RPC (WS) | `wss://liteforge.rpc.caldera.xyz/ws` |
 | Block explorer | `https://liteforge.explorer.caldera.xyz` |
 | Contract addresses | [Contracts & Addresses](../protocol/contracts.md) |
-| App REST endpoints | `/api/perp/positions`, `/api/perp/open-limits`, `/api/perp/market-stats`, `/api/perp/vault-mark` |
+| REST API base | `https://addax.finance` |
+| REST endpoints | `/api/perp/positions`, `/api/perp/open-limits`, `/api/perp/market-stats`, `/api/perp/vault-mark`, `/api/perp/trades`, `/api/perp/candles` |
 
 ## The stacks
 

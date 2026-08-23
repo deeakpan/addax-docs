@@ -1,80 +1,56 @@
 # Building Keeper Bots
 
-Addax relies on keepers to push prices and execute triggers (limit opens, take-profit, stop-loss, liquidations). The reference implementations live in the repo under `perps-keepers` (trigger keeper) and `oracle-keeper` (price keeper). This page shows how to run and extend them.
+Addax relies on keepers to keep prices fresh and to execute triggers that cannot self-fulfill: limit opens, take-profit, stop-loss, and liquidations. Anyone can run a keeper. Successful triggers earn a reward.
 
-## Trigger keeper
+## Start here: `addax_protocol/bots`
 
-Scans open positions and pending limit orders against the live oracle price and executes anything due.
+Use the reference bots in the **`addax_protocol/bots`** repository. Clone that repo, follow its setup guide, and configure the required environment variables there. Keep keys and operator secrets out of public channels.
 
-### Commands
+At a high level you will need:
 
-```bash
-# in perps-keepers/
-npm start # long-running watcher (WebSocket subscriptions + continuous scan)
-npm run once # single scan+execute pass, then exit (good for cron)
-npm run db:init # create Supabase tables from .env
-npm run db:reset # wipe and recreate keeper tables/cursors
-```
+- A **LitVM RPC** endpoint (HTTP, and ideally WebSocket for live event subscriptions).
+- A **funded keeper wallet** with enough native gas token to submit transactions continuously.
+- The ability to **sign and send contract calls** as that wallet (private key or equivalent signer managed securely).
+- Access to the **keeper NFT** (or equivalent authorization) required by the trading contracts to initiate trigger orders.
+- Whatever **state/indexing** configuration the bots repo expects so your bot can discover open positions and pending limits efficiently.
 
-### What it does each pass
+Exact variable names, ABIs, and helper modules live in `addax_protocol/bots`. Treat that repo as the source of truth.
 
-1. Load open positions and pending limit orders (from the indexed mirror in Supabase).
-2. For each, compare against the current oracle price to decide if OPEN / TP / SL / LIQ conditions are met.
-3. Execute the **two-step trigger**:
- - `executeNftOrder(orderType, ...)` on Trading -> emits `NftOrderInitiated`.
- - `fulfillOrder` on the Price Aggregator -> resolves price and completes the action.
-4. Simulate first and skip known reverts (timelock not elapsed, condition invalid, already executed), then submit.
+## What keepers do
 
-### Environment
+### Trigger keeper
 
-Key `.env` values (see `perps-keepers/.env.example`):
+Scans open positions and pending limit orders against the live oracle mark and executes anything due:
 
-| Var | Purpose |
-|---|---|
-| `PERPS_RPC_URL` | LitVM RPC (HTTP) |
-| `PERPS_SYNC_MODE` | `websocket` (recommended) or `poll` |
-| `PERPS_POLL_INTERVAL_MS` | Scan interval when polling |
-| `KEEPER_PRIVATE_KEY` | Wallet that owns the keeper NFT and pays gas |
-| `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | State mirror |
-| `SUPABASE_DB_URL` | Direct Postgres URL for schema management |
+1. Detect OPEN / TP / SL / LIQ conditions.
+2. Initiate the trigger on the **Trading** contract.
+3. Fulfill the price on the **Price Aggregator** so callbacks can settle the trade.
+4. Prefer simulating first and skipping known reverts (timelock, condition no longer valid, already executed).
 
-> The keeper wallet must hold the keeper NFT used by `executeNftOrder`. On this deployment the trigger NFT is minted to the deployer, so use that key (or transfer the NFT).
+### Oracle / price keeper
 
-### Reliability notes
+Keeps the on-chain price feed fresh so fulfillments always have recent data to settle against.
 
-- Prefer **WebSocket** mode: `eth_subscribe` avoids slow `eth_getLogs` polling.
-- Startup log catch-up runs **best-effort and non-blocking**, so the live subscription comes up immediately even if historical `getLogs` is slow.
-- RPC calls use extended timeouts and retries.
+## Requirements for operators
 
-## Oracle keeper
+- **Gas**: keepers submit many transactions. Keep the wallet topped up with LitVM gas token.
+- **Signing**: the bot must sign Trading and Price Aggregator calls. Protect the key; use a dedicated operator wallet.
+- **Authorization**: the signing wallet must hold the required keeper NFT (or be otherwise authorized) for trigger initiation.
+- **Uptime**: prefer WebSocket subscriptions for live events; fall back to polling only if needed.
+- **Rewards**: successful permissionless executions earn the configured keeper reward.
 
-Keeps the price feed fresh so the aggregator always has recent data to fulfill against.
-
-```bash
-# in oracle-keeper/
-npm start # long-running watch loop, pushes price updates on interval
-npm run once # push a single update, then exit
-```
-
-Configure `ORACLE_POLL_INTERVAL_MS` and the RPC/keeper credentials in `oracle-keeper/.env`.
-
-## Writing your own keeper
-
-Any wallet holding the keeper NFT can execute triggers permissionlessly and earn rewards. The minimal loop is:
+## Conceptual loop
 
 ```typescript
-for (const pos of openPositions) {
- const price = await getOraclePrice(pos.pairIndex);
- const kind = classify(pos, price); // "TP" | "SL" | "LIQ" | null
- if (!kind) continue;
+for (const position of openPositions) {
+  const mark = await readOracleMark(position.pairIndex);
+  const kind = classifyTrigger(position, mark); // TP | SL | LIQ | null
+  if (!kind) continue;
 
- // simulate to skip known reverts
- const ok = await simulate(() => trading.executeNftOrder(orderType(kind), ...));
- if (!ok) continue;
-
- await trading.executeNftOrder(orderType(kind), pos.trader, pos.pairIndex, pos.index, nftId, nftType);
- await priceAggregator.fulfillOrder(orderId, priceData);
+  // Simulate, then submit if valid
+  await trading.executeNftOrder(/* orderType, trader, pair, index, nftId, ... */);
+  await priceAggregator.fulfillOrder(/* orderId, pricePayload */);
 }
 ```
 
-Reuse the trimmed ABIs in `perps-keepers/src/lib/abis.ts` and the two-step helper in `perps-keepers/src/lib/nft-orders.ts` as a starting point.
+For the protocol-level flow (two-step triggers, roles, rewards), see [Keepers](../protocol/keepers.md). For contract entry points, see [Trading Contracts](contracts.md).

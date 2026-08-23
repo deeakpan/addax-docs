@@ -2,7 +2,7 @@
 
 Addax is a synthetic, oracle-priced leveraged trading protocol built on the gTrade / Gains Network architecture and deployed on LitVM.
 
-Pricing is powered by **[DIA](https://www.diadata.org/)**; historical and live protocol data is indexed with **[Goldsky](https://goldsky.com/)**.
+Pricing is powered by **DIA**; historical and live protocol data is indexed with **Goldsky**.
 
 ## Sections
 

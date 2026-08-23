@@ -6,18 +6,16 @@ Addax is a leveraged trading protocol built on the gTrade / Gains Network contra
 
 Addax is intentionally built on proven, widely adopted providers rather than bespoke systems for pricing and indexed history.
 
-| Partner | Role |
-|---|---|
-| **[DIA](https://www.diadata.org/)** | Market data oracle: mark prices for settlement |
-| **[Goldsky](https://goldsky.com/)** | Subgraph indexing: reliable access to on-chain trading activity |
-
 <p align="left">
- <a href="https://www.diadata.org/"><img src="https://avatars.githubusercontent.com/u/42144424?s=64&v=4" alt="DIA" width="40" height="40" /></a>
- &nbsp;&nbsp;
- <a href="https://goldsky.com/"><img src="https://avatars.githubusercontent.com/u/90223190?s=64&v=4" alt="Goldsky" width="40" height="40" /></a>
+  <img src="https://avatars.githubusercontent.com/u/42144424?s=96&v=4" alt="DIA" width="48" height="48" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://avatars.githubusercontent.com/u/90223190?s=96&v=4" alt="Goldsky" width="48" height="48" />
 </p>
 
-[DIA](https://www.diadata.org/) | [DIA brand assets](https://www.diadata.org/brand-assets/) | [Goldsky](https://goldsky.com/) | [Goldsky brand kit](https://goldsky.link/brand-kit)
+| Partner | Role |
+|---|---|
+| **DIA** | Market data oracle: mark prices for settlement |
+| **Goldsky** | Subgraph indexing: reliable access to on-chain trading activity |
 
 **Oracles (DIA).** Entries, exits, and liquidations settle against DIA marks. Testnet uses push feeds with a **0.1%** deviation threshold; mainnet is planned around DIA **pull** reports so each trade can consume a freshly signed price. Details: [Price Oracle](price-oracle.md).
 

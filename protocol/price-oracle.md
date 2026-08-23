@@ -1,14 +1,10 @@
 # Price Oracle
 
-Addax settles every open, close, and trigger against an **on-chain oracle mark**, not an order book. Pricing is provided by **[DIA](https://www.diadata.org/)**: a widely used oracle network that delivers transparent, multi-source market data to smart contracts.
+Addax settles every open, close, and trigger against an **on-chain oracle mark**, not an order book. Pricing is provided by **DIA**: a widely used oracle network that delivers transparent, multi-source market data to smart contracts.
 
 <p align="left">
- <a href="https://www.diadata.org/">
- <img src="https://avatars.githubusercontent.com/u/42144424?s=120&v=4" alt="DIA" width="48" height="48" />
- </a>
+  <img src="https://avatars.githubusercontent.com/u/42144424?s=120&v=4" alt="DIA" width="48" height="48" />
 </p>
-
-[DIA](https://www.diadata.org/) | [Brand assets](https://www.diadata.org/brand-assets/)
 
 ## Why DIA
 

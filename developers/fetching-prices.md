@@ -1,6 +1,6 @@
 # Fetching Prices
 
-Addax marks come from **[DIA](https://www.diadata.org/)**. On LitVM testnet, feeds are **push**-updated with a **0.1%** deviation threshold; mainnet is planned around DIA **pull** reports. The **Price Aggregator** consumes those feeds for each market. This page shows how to read marks for integrations. Full oracle design: [Price Oracle](../protocol/price-oracle.md).
+Addax marks come from **DIA**. On LitVM testnet, feeds are **push**-updated with a **0.1%** deviation threshold; mainnet is planned around DIA **pull** reports. The **Price Aggregator** consumes those feeds for each market. This page shows how to read marks for integrations. Full oracle design: [Price Oracle](../protocol/price-oracle.md).
 
 ## Market -> oracle key
 
@@ -51,16 +51,33 @@ const [value, timestamp] = await client.readContract({
 
 > Confirm the oracle interface and value scaling against the deployed contract, DIA-style feeds typically report 8-decimal values with a publish timestamp.
 
-## App REST endpoints
+## Public REST API
 
-The Addax app exposes convenience endpoints that already resolve prices and market stats:
+Base URL:
 
-| Endpoint | Returns |
-|---|---|
-| `GET /api/perp/market-stats` | Per-market mark price, change, and stats |
-| `GET /api/perp/vault-mark` | Vault mark / assets-per-share data |
-| `GET /api/perp/positions` | Open positions (indexed) |
-| `GET /api/perp/open-limits` | Pending open limit orders |
+```text
+https://addax.finance
+```
+
+Convenience endpoints for marks, positions, and related market data:
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/api/perp/market-stats` | Per-market mark price, change, and stats |
+| `GET` | `/api/perp/vault-mark` | On-chain vault / DIA mark (`?symbol=BTC` or `?diaKey=BTC/USD`) |
+| `GET` | `/api/perp/positions` | Open positions for an account (`?account=0x…`) |
+| `GET` | `/api/perp/open-limits` | Pending open limit orders (`?account=0x…`) |
+| `GET` | `/api/perp/trades` | Trade history (`?account=0x…`, optional `symbol`, `limit`) |
+| `GET` | `/api/perp/candles` | OHLCV candles (`?asset=bitcoin&interval=15m`) |
+| `GET` | `/api/perp/prices` | Reference spot quotes for header assets |
+
+Example:
+
+```bash
+curl "https://addax.finance/api/perp/market-stats"
+curl "https://addax.finance/api/perp/positions?account=0xYourAddress"
+curl "https://addax.finance/api/perp/vault-mark?symbol=BTC"
+```
 
 These are the simplest way to display prices and positions without wiring up oracle reads yourself.
 

@@ -10,7 +10,7 @@ Addax lets you post margin in three collaterals. Each collateral has its own **s
 | ADDX | `ADDX` | 18 | `0xf6078Be81aBCC95BAC306356963E7adB986783f9` | gADDX |
 | Wrapped zkLTC | `WzkLTC` | 18 | `0xA52F83592b9216C574e11324d4468F078aEA05BE` | gzKLTC |
 
-> Contract addresses can be overridden per-deployment via `NEXT_PUBLIC_PERPS_*` environment variables. The values above are the current LitVM deployment. See [Contracts & Addresses](../protocol/contracts.md) for the full list.
+> Addresses above are the current LitVM deployment. See [Contracts & Addresses](../protocol/contracts.md) for the full list.
 
 ## USDC
 

@@ -97,4 +97,4 @@ Addax perpetuals are deployed on **LitVM** (chain ID `4441`). Each collateral ha
 - Prefer the **gUSDC stack** for most integrations, it is the primary UI and keeper stack.
 - **Trading** is the write entry point; **Storage** is the canonical read source; **Pair Infos** holds per-pair fee/leverage params.
 - Testnet deployments can be redeployed; always confirm addresses against the live app or the deployment manifest before sending funds.
-- Protocol event indexing is provided via **[Goldsky](https://goldsky.com/)** subgraphs (see [Architecture Overview](overview.md)).
+- Protocol event indexing is provided via **Goldsky** subgraphs (see [Architecture Overview](overview.md)).
