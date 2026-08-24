@@ -37,9 +37,10 @@
 ## Developers
 
 * [Integration Overview](developers/README.md)
-* [Trading Contracts](developers/contracts.md)
+* [Trading API](developers/trading-api.md)
+* [Public REST API](developers/public-api.md)
+* [Direct Contract Integration](developers/contracts.md)
 * [Fetching Prices](developers/fetching-prices.md)
-* [Building Keeper Bots](developers/building-bots.md)
 
 ## Help
 
