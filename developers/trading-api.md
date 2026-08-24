@@ -2,22 +2,22 @@
 
 The Addax **Trading API** is the recommended path for programmatic trading. It handles contract resolution, oracle marks, parameter validation, and calldata encoding. Your application receives an **unsigned transaction** to sign with the trader's wallet and broadcast to LitVM.
 
-This follows the same pattern used by leading perp integrations (prepare → sign → send): the server does the heavy lifting; keys never leave your environment.
+This follows the same pattern used by leading perp integrations (prepare → sign → send): the server does the heavy lifting.
 
 ## Getting an API key
 
 The Trading API is available to approved integrators. There is no self-service signup.
 
-**Request access:** email **[contact@addax.finance](mailto:contact@addax.finance)** with:
+**Request access:** reach out to the protocol team at **[contact@addax.finance](mailto:contact@addax.finance)** with:
 
 - Project or company name  
 - Intended use (e.g. trading terminal, automation, research)  
 - Expected request volume  
-- Email address where the key should be delivered  
+- Delivery email for the key  
 
-If approved, Addax sends your API key to that address from **auth@addax.finance**. The key is shown **once** — store it in a secrets manager or server environment variable. Never commit it to git or expose it in browser or mobile client code.
+If approved, you receive your API key by email. The key is shown **once** — store it in a secrets manager or server environment variable. Never commit it to git or expose it in browser or mobile client code.
 
-To rotate, revoke, or raise rate limits, contact **[contact@addax.finance](mailto:contact@addax.finance)**.
+To rotate, revoke, or raise rate limits, reach out to the protocol team.
 
 ## Base URL
 
@@ -56,7 +56,7 @@ X-RateLimit-Remaining: 297
 X-RateLimit-Reset: 1734567890
 ```
 
-When limited, the API returns `429` with a `Retry-After` header. For production workloads above these limits, contact [contact@addax.finance](mailto:contact@addax.finance).
+When limited, the API returns `429` with a `Retry-After` header. For higher production limits, reach out to the protocol team.
 
 ## Workflow
 

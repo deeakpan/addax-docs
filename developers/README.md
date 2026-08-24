@@ -12,7 +12,7 @@ Addax is non-custodial. Neither API holds private keys. The Trading API returns 
 | [Public REST API](./public-api.md) | Dashboards, widgets, price displays | None | 60 req/min per IP |
 | [Direct contracts](./contracts.md) | Full control, keepers, custom flows | On-chain wallet | N/A (RPC limits apply) |
 
-Need higher throughput, dedicated infrastructure, or white-label access? Email **[contact@addax.finance](mailto:contact@addax.finance)** for Trading API keys and enterprise limits.
+Need Trading API access, higher throughput, or enterprise limits? Reach out to the protocol team at **[contact@addax.finance](mailto:contact@addax.finance)**.
 
 ## Quick references
 

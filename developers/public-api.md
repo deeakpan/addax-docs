@@ -2,15 +2,13 @@
 
 The Public REST API exposes read-only market and account data for dashboards, widgets, and lightweight integrations. It is **free and unauthenticated**, but **rate-limited** to keep the service reliable for everyone.
 
-For programmatic trading, position management, and higher throughput, use the [Trading API](./trading-api.md) instead. API keys are available at [contact@addax.finance](mailto:contact@addax.finance).
+For programmatic trading, position management, and higher throughput, use the [Trading API](./trading-api.md) instead.
 
 ## Base URL
 
 ```text
 https://addax.finance
 ```
-
-All routes are under `/api/perp/…`.
 
 ## Rate limits
 
@@ -32,8 +30,7 @@ When exceeded, the API returns `429`:
 {
   "error": "rate_limit_exceeded",
   "message": "Public API rate limit exceeded. Use the Trading API for higher limits.",
-  "retryAfterSec": 34,
-  "contact": "contact@addax.finance"
+  "retryAfterSec": 34
 }
 ```
 
