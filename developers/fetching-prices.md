@@ -11,7 +11,7 @@ curl "https://addax.finance/api/perp/vault-mark?symbol=BTC"
 curl "https://addax.finance/api/perp/market-stats"
 ```
 
-These endpoints are rate-limited (60 req/min per IP). For production volume, use the [Trading API](./trading-api.md).
+These endpoints are rate-limited (30 req/min per IP). For production volume, use the [Trading API](./trading-api.md).
 
 ## Market → oracle key
 

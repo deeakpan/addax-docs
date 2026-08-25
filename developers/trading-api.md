@@ -48,7 +48,7 @@ Unauthenticated or invalid keys receive `401`.
 | Tier | Limit |
 |---|---|
 | Trading API (per key) | **300 requests / minute** |
-| Public REST API (per IP) | **60 requests / minute** |
+| Public REST API (per IP) | **30 requests / minute** |
 
 Responses include standard headers:
 

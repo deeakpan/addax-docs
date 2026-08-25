@@ -14,13 +14,13 @@ https://addax.finance
 
 | Scope | Limit |
 |---|---|
-| Public REST (per IP) | **60 requests / minute** |
+| Public REST (per IP) | **30 requests / minute** |
 
 Every response includes:
 
 ```http
-X-RateLimit-Limit: 60
-X-RateLimit-Remaining: 42
+X-RateLimit-Limit: 30
+X-RateLimit-Remaining: 22
 X-RateLimit-Reset: 1734567890
 ```
 
