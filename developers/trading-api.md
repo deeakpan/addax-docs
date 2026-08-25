@@ -86,16 +86,18 @@ Prepared payloads expire after **120 seconds** (`expiresAt` unix timestamp).
 
 ### `GET /markets`
 
-Returns listed markets, DIA keys, and gUSDC contract addresses.
+Returns listed markets, DIA keys, and **all deployed collateral stacks** (USDC, WzkLTC, ADDX).
 
 ```bash
 curl -s "https://api.addax.finance/api/v1/markets" \
   -H "x-addax-api-key: YOUR_API_KEY"
 ```
 
+Each stack includes its own `trading`, `storage`, `vault`, and `collateralToken` addresses. Use the stack that matches your margin token when calling `/orders/prepare`.
+
 ### `GET /positions`
 
-Enhanced positions read (same shape as the public API, higher rate limit under your key).
+Enhanced positions read across **all collateral stacks** (USDC, ADDX, WzkLTC). Same shape as the public API, higher rate limit under your key. Each position includes `stackId` and `collateralToken`.
 
 ```bash
 curl -s "https://api.addax.finance/api/v1/positions?account=0xYourAddress" \
@@ -164,14 +166,61 @@ curl -s -X POST "https://api.addax.finance/api/v1/orders/prepare" \
 }
 ```
 
-#### Approve USDC (first-time setup)
+#### Approve collateral (first-time setup per stack)
+
+Approves the collateral ERC-20 for the stack's **storage** contract (required before opening).
+
+USDC:
 
 ```json
 {
   "from": "0xYourWallet",
-  "kind": "approve"
+  "kind": "approve",
+  "collateral": "USDC"
 }
 ```
+
+WzkLTC (gzKLTC stack):
+
+```json
+{
+  "from": "0xYourWallet",
+  "kind": "approve",
+  "collateral": "WzkLTC"
+}
+```
+
+#### Wrap native zkLTC → WzkLTC (gzKLTC stack only)
+
+Perps margin on the zkLTC stack uses **WzkLTC**. If you hold native zkLTC, wrap first:
+
+```json
+{
+  "from": "0xYourWallet",
+  "kind": "wrap",
+  "collateral": "zkLTC",
+  "wrapAmount": "0.05"
+}
+```
+
+The returned payload includes a non-zero `value` field (native zkLTC sent with the tx).
+
+#### Open with WzkLTC margin
+
+```json
+{
+  "from": "0xYourWallet",
+  "kind": "increase",
+  "collateral": "WzkLTC",
+  "symbol": "LTC",
+  "direction": "long",
+  "orderType": "market",
+  "marginAmount": "0.05",
+  "leverage": 10
+}
+```
+
+Use `marginAmount` (token units) for WzkLTC and ADDX. Use `marginUsd` for USDC.
 
 ### Prepare response
 
@@ -256,15 +305,29 @@ const hash = await walletClient.sendTransaction({
 | Field | Required | Description |
 |---|---|---|
 | `from` | Yes | Trader wallet (must sign the returned tx) |
-| `kind` | Yes | `increase`, `decrease`, `update-tp`, `update-sl`, `cancel-limit`, `approve` |
-| `symbol` | For `increase` | Market ticker (`BTC`, `ETH`, …) |
+| `kind` | Yes | `increase`, `decrease`, `update-tp`, `update-sl`, `cancel-limit`, `approve`, `wrap` |
+| `collateral` | No | `USDC` (default), `WzkLTC`, `zkLTC`, or `ADDX` — selects margin stack |
+| `symbol` | For `increase` | Market ticker (`BTC`, `ETH`, `LTC`, …) |
 | `direction` | For `increase` | `long` or `short` |
 | `orderType` | For `increase` | `market` (default) or `limit` |
-| `marginUsd` | For `increase` | Collateral in USDC (human-readable) |
+| `marginUsd` | For USDC `increase` | Collateral in USDC (human-readable) |
+| `marginAmount` | For WzkLTC/ADDX `increase` | Margin in token units (human-readable) |
+| `wrapAmount` | For `wrap` | Native zkLTC to deposit into WzkLTC |
 | `leverage` | For `increase` | Integer leverage (default `10`) |
 | `limitPriceUsd` | For limit opens | Trigger price |
 | `takeProfitUsd` / `stopLossUsd` | No | Optional TP/SL at entry |
-| `pairIndex` / `tradeIndex` | For close/update | On-chain trade slot |
+| `pairIndex` / `tradeIndex` | For close/update | On-chain trade slot (use same `collateral` as the open) |
+
+## Collateral stacks
+
+| `collateral` | Margin token | Stack | Notes |
+|---|---|---|---|
+| `USDC` | USDC | gUSDC | `marginUsd` |
+| `WzkLTC` | WzkLTC | gzKLTC | `marginAmount` in WzkLTC |
+| `zkLTC` | native zkLTC | gzKLTC | Use `kind: "wrap"` only; margin trades use `WzkLTC` |
+| `ADDX` | ADDX | gADDX | `marginAmount` in ADDX |
+
+Typical gzKLTC flow: **wrap** (if needed) → **approve** (`collateral: "WzkLTC"`) → **increase** (`collateral: "WzkLTC"`).
 
 ## Errors
 
