@@ -23,7 +23,7 @@ Need Trading API access, higher throughput, or enterprise limits? Reach out to t
 | RPC (WS) | `wss://liteforge.rpc.caldera.xyz/ws` |
 | Block explorer | `https://liteforge.explorer.caldera.xyz` |
 | App / Public API base | `https://addax.finance` |
-| Trading API base | `https://addax.finance/api/v1` |
+| Trading API base | `https://api.addax.finance` |
 | Contract addresses | [Contracts & Addresses](../protocol/contracts.md) |
 | Oracle / DIA feeds | [Price Oracle](../protocol/price-oracle.md) |
 

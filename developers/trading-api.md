@@ -22,8 +22,10 @@ To rotate, revoke, or raise rate limits, reach out to the protocol team.
 ## Base URL
 
 ```text
-https://addax.finance/api/v1
+https://api.addax.finance
 ```
+
+Routes are under `/api/v1`. Local: `http://localhost:3001`.
 
 ## Authentication
 
@@ -87,7 +89,7 @@ Prepared payloads expire after **120 seconds** (`expiresAt` unix timestamp).
 Returns listed markets, DIA keys, and gUSDC contract addresses.
 
 ```bash
-curl -s "https://addax.finance/api/v1/markets" \
+curl -s "https://api.addax.finance/api/v1/markets" \
   -H "x-addax-api-key: YOUR_API_KEY"
 ```
 
@@ -96,7 +98,7 @@ curl -s "https://addax.finance/api/v1/markets" \
 Enhanced positions read (same shape as the public API, higher rate limit under your key).
 
 ```bash
-curl -s "https://addax.finance/api/v1/positions?account=0xYourAddress" \
+curl -s "https://api.addax.finance/api/v1/positions?account=0xYourAddress" \
   -H "x-addax-api-key: YOUR_API_KEY"
 ```
 
@@ -107,7 +109,7 @@ Build an unsigned transaction for the trader to sign.
 #### Open / increase (market)
 
 ```bash
-curl -s -X POST "https://addax.finance/api/v1/orders/prepare" \
+curl -s -X POST "https://api.addax.finance/api/v1/orders/prepare" \
   -H "Content-Type: application/json" \
   -H "x-addax-api-key: YOUR_API_KEY" \
   -d '{
@@ -223,7 +225,7 @@ const walletClient = createWalletClient({
   transport: http("https://liteforge.rpc.caldera.xyz/http"),
 });
 
-const prepared = await fetch("https://addax.finance/api/v1/orders/prepare", {
+const prepared = await fetch("https://api.addax.finance/api/v1/orders/prepare", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
