@@ -14,35 +14,17 @@ Opening on the lighter side of an imbalanced market means you **earn** funding f
 
 Funding is settled into the position (margin / PnL). There is no separate hourly wallet transfer. Paying funding slowly reduces margin and can move liquidation closer; earning funding does the opposite.
 
-## Example rates
+## Rates
 
-Base rates are set per market from volatility and updated periodically. The figures below are the **maximum rate on net open interest** when one side is empty. Your effective rate scales with how skewed the market is.
+Base rates are set per market from volatility and updated periodically. Values below are the **maximum rate on net open interest** when one side is empty. Your effective rate scales with how skewed the market is.
 
-<p>
-  <img src="assets/btc.png" alt="BTC" width="28" height="28" />
-  <strong> BTC/USD</strong><br/>
-  ~0.0013% / hour &nbsp;·&nbsp; ~11.2% / year (full skew)
-</p>
+| | Market | Hourly | Annual (full skew) |
+| :---: | --- | ---: | ---: |
+| <img src="assets/btc.png" alt="BTC" width="24" /> | BTC/USD | ~0.0013% | ~11.2% |
+| <img src="assets/sol.png" alt="SOL" width="24" /> | SOL/USD | ~0.0018% | ~15.9% |
+| <img src="assets/hype.jpg" alt="HYPE" width="24" /> | HYPE/USD | ~0.0030% | ~26.1% |
 
-<p>
-  <img src="assets/sol.png" alt="SOL" width="28" height="28" />
-  <strong> SOL/USD</strong><br/>
-  ~0.0018% / hour &nbsp;·&nbsp; ~15.9% / year (full skew)
-</p>
-
-<p>
-  <img src="assets/hype.jpg" alt="HYPE" width="28" height="28" />
-  <strong> HYPE/USD</strong><br/>
-  ~0.0030% / hour &nbsp;·&nbsp; ~26.1% / year (full skew)
-</p>
-
-**Example.** Suppose BTC/USD funding is ~11%/year at full skew, with **\$1m** long and **\$500k** short open interest:
-
-- Net exposure = \$500k
-- Total funding transferred ≈ \$500k × 11% ≈ **\$55k / year**
-- Longs pay ~**5.5%/year** on their OI; shorts earn ~**11%/year** on theirs
-
-If the same market were perfectly balanced, both sides would pay ~**0**.
+With **\$1m** long and **\$500k** short on BTC/USD at ~11%/year full skew: net exposure is \$500k, so ~\$55k/year moves from longs to shorts (~5.5%/year cost for longs, ~11%/year for shorts). A balanced market pays ~0.
 
 Higher-volatility markets (e.g. HYPE) carry a higher base rate than majors like BTC; calmer markets (e.g. gold) sit lower. Live skew still dominates what you actually pay or earn.
 
