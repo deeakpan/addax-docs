@@ -18,11 +18,11 @@ Funding is settled into the position (margin / PnL). There is no separate hourly
 
 Base rates are set per market from volatility and updated periodically. Values below are the **maximum rate on net open interest** when one side is empty. Your effective rate scales with how skewed the market is.
 
-| | Market | Hourly | Annual (full skew) |
-| :---: | --- | ---: | ---: |
-| <img src="assets/btc.png" alt="BTC" width="24" /> | BTC/USD | ~0.0013% | ~11.2% |
-| <img src="assets/sol.png" alt="SOL" width="24" /> | SOL/USD | ~0.0018% | ~15.9% |
-| <img src="assets/hype.jpg" alt="HYPE" width="24" /> | HYPE/USD | ~0.0030% | ~26.1% |
+| Market | Hourly | Annual (full skew) |
+| --- | ---: | ---: |
+| ![BTC](assets/btc-sm.png) BTC/USD | ~0.0013% | ~11.2% |
+| ![SOL](assets/sol-sm.png) SOL/USD | ~0.0018% | ~15.9% |
+| ![HYPE](assets/hype-sm.png) HYPE/USD | ~0.0030% | ~26.1% |
 
 With **\$1m** long and **\$500k** short on BTC/USD at ~11%/year full skew: net exposure is \$500k, so ~\$55k/year moves from longs to shorts (~5.5%/year cost for longs, ~11%/year for shorts). A balanced market pays ~0.
 
