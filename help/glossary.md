@@ -18,7 +18,7 @@ Key terms used across the Addax documentation.
 
 **Price impact**: A size- and skew-dependent adjustment to execution price that keeps long/short open interest balanced.
 
-**Borrowing / Holding fee**: A time-based fee accrued while a position is open, based on open-interest skew; erodes margin over time.
+**Funding**: A transfer between longs and shorts while a position is open. The crowded side pays the lighter side. Near zero when the market is balanced. Accrues into position value (not a separate hourly wallet payment).
 
 **Take-profit (TP)**: An automatic close order that locks in profit at a target price.
 
@@ -44,7 +44,7 @@ Key terms used across the Addax documentation.
 
 **Stack**: A full set of trading contracts (Trading, Storage, Callbacks, Vault, Pair Infos, Price Aggregator) for one collateral.
 
-**Pair Infos**: The contract holding per-pair parameters: spread, fees, borrowing rates, and leverage caps.
+**Pair Infos**: The contract holding per-pair parameters: spread, fees, funding rates, and leverage caps.
 
 **pairIndex**: The on-chain integer identifier for a market (e.g. BTC = 0).
 

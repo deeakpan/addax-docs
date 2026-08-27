@@ -38,7 +38,11 @@ When accumulated losses plus fees erode your margin down to the maintenance thre
 
 ## What fees do I pay?
 
-Spread, an opening and closing fee on notional, price impact on large size, and a time-based borrowing/holding fee. See [Fees & Spread](../trading/fees-and-spread.md).
+Spread, an opening and closing fee on notional, price impact on large size, and **funding** while the market is skewed. See [Fees & Spread](../trading/fees-and-spread.md) and [Funding Rates](../trading/funding-rates.md).
+
+## How does funding work?
+
+If one side of a market has more open interest, that side pays the other. Balanced markets pay little or nothing. Funding accrues into your position over time — see [Funding Rates](../trading/funding-rates.md).
 
 ## How do I earn as a liquidity provider?
 

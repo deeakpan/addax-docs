@@ -1,6 +1,6 @@
 # Fees & Spread
 
-Addax has a simple, transparent fee model. Because trades settle against a vault at the oracle price, there is no order-book slippage, your costs are the spread, an opening/closing fee, price impact, and time-based holding fees.
+Addax has a simple, transparent fee model. Because trades settle against a vault at the oracle price, there is no order-book slippage. Your costs are the spread, an opening/closing fee, price impact, and funding while a position is open.
 
 ## Spread
 
@@ -20,9 +20,11 @@ Because it's charged on notional (collateral x leverage), higher leverage means 
 
 Large positions relative to the market's open interest incur **price impact**: a small adjustment to entry/exit price that scales with size and existing skew. This keeps long/short open interest balanced and protects the vault.
 
-## Borrowing / holding fees
+## Funding
 
-Open positions accrue a **borrowing (holding) fee** over time, based on the market's open-interest skew. If you're on the crowded side of the market you pay more; this incentivizes balanced open interest and compensates the vault for the risk it carries. Holding fees continuously erode margin, so they also move your liquidation price against you.
+While a position is open, **funding** can transfer value between longs and shorts when one side is larger than the other. The crowded side pays; the lighter side earns. If the market is balanced, funding is near zero. Funding accrues into the position (it is not a separate hourly wallet payment) and can move your liquidation price over time.
+
+See [Funding Rates](funding-rates.md) for the trader-facing explanation.
 
 ## Putting it together
 
@@ -31,7 +33,7 @@ Your net PnL when you close is roughly:
 ```
 PnL = (exit − entry) x direction x size
  − openFee − closeFee
- − accruedHoldingFees
+ ± funding
  ± priceImpact
 ```
 

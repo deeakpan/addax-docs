@@ -17,6 +17,7 @@
 * [Order Types](trading/order-types.md)
 * [Leverage & Liquidation](trading/leverage-and-liquidation.md)
 * [Fees & Spread](trading/fees-and-spread.md)
+* [Funding Rates](trading/funding-rates.md)
 * [Pair List](trading/pair-list.md)
 * [Asset Classes](trading/asset-classes.md)
 

@@ -35,6 +35,6 @@ This means:
 
 - **Price movement** relative to your entry, multiplied by leverage.
 - **Spread** applied at open and close.
-- **Borrowing/holding fees** accrued over time for keeping a position open (see [Fees & Spread](fees-and-spread.md)).
+- **Funding** accrued over time when the market is skewed (see [Funding Rates](funding-rates.md)).
 
 Next: [Opening & Closing Trades](opening-closing-trades.md).
