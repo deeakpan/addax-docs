@@ -1,13 +1,17 @@
 # Price Oracle
 
 {% tabs %}
-{% tab title="Mainnet" %}
-Mainnet prices come from Lighter. The mark price is used for margin and liquidation. The index price tracks the spot market. Funding uses the difference between those prices.
 
-There is no DIA feed on mainnet.
+{% tab title="Mainnet" %}
+
+The mark price is the fair price used for margin and liquidation. The index price tracks the spot market. Funding uses the gap between the two.
+
+Addax is built on [Lighter](https://lighter.xyz/).
+
 {% endtab %}
 
 {% tab title="Testnet" %}
+
 Addax settles every open, close, and trigger against an **on-chain oracle mark**, not an order book. Pricing is provided by **DIA**: a widely used oracle network that delivers transparent, multi-source market data to smart contracts.
 
 <p align="left">
@@ -74,5 +78,7 @@ Per-market Chainlink-style feed adapters are listed with the deployment in [Cont
 - [Architecture Overview](overview.md), how the aggregator sits in the stack
 - [Keepers](keepers.md), who drives triggers once a price is available
 - [Fetching Prices](../developers/fetching-prices.md), reading marks for integrations
+
 {% endtab %}
+
 {% endtabs %}

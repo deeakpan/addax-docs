@@ -1,15 +1,21 @@
 # Funding Rates
 
 {% tabs %}
+
 {% tab title="Mainnet" %}
-Funding is paid once an hour, between traders. Addax does not take a cut of it.
 
-When the funding rate is positive, long positions pay short positions. When the rate is negative, short positions pay long positions. The payment depends on your position size and the funding rate for that hour.
+Funding is exchanged once an hour. It is a payment between open longs and shorts, so the perpetual price stays near the index.
 
-The rate is an estimate of the difference between the perpetual price and the spot index, clamped so a single hour cannot move funding without limit. The app shows the last settled rate and an estimate of the next one.
+If the funding rate is positive, longs pay shorts. If it is negative, shorts pay longs. The amount is your position size times the index price times that hour's rate.
+
+The rate shown before the hour ends is an estimate. The rate after the hour is the one that was paid.
+
+Addax is built on [Lighter](https://lighter.xyz/).
+
 {% endtab %}
 
 {% tab title="Testnet" %}
+
 Funding balances long and short open interest on each market. It is a transfer **between traders** — not a protocol fee — and it is the one cost on Addax that can work in your favour.
 
 ## How funding works
@@ -51,5 +57,7 @@ Higher-volatility markets (e.g. HYPE) carry a higher base rate than majors like 
 - [Fees & Spread](fees-and-spread.md)
 - [Leverage & Liquidation](leverage-and-liquidation.md)
 - [Protocol Fees](../protocol/fees.md)
+
 {% endtab %}
+
 {% endtabs %}

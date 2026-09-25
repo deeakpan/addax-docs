@@ -1,17 +1,21 @@
 # Fees & Spread
 
 {% tabs %}
+
 {% tab title="Mainnet" %}
-The Addax fee is up to **0.1%** of the trade size. It is taken in USDC when the order fills and credited to Addax.
 
-You approve that maximum once. Every order signed by your API key can include a fee up to the approved maximum, and cannot exceed it. You can revoke the approval.
+Addax charges up to **0.1%** of the filled size. The fee is taken in USDC when the order fills.
 
-Example: a $10,000 fill at 0.05% pays $5. At the maximum of 0.1%, the same fill pays $10.
+A $10,000 fill at 0.1% costs $10. You approve that maximum once. An order cannot charge more than the maximum you approved.
 
-Funding is separate. It is paid between traders, not to Addax. See [Funding Rates](funding-rates.md).
+Funding is not a fee. It moves between longs and shorts once an hour. See [Funding Rates](funding-rates.md).
+
+Addax is built on [Lighter](https://lighter.xyz/).
+
 {% endtab %}
 
 {% tab title="Testnet" %}
+
 Addax has a simple, transparent fee model. Because trades settle against a vault at the oracle price, there is no order-book slippage. Your costs are the spread, an opening/closing fee, price impact, and funding while a position is open.
 
 ## Spread
@@ -50,5 +54,7 @@ PnL = (exit − entry) x direction x size
 ```
 
 For the on-chain fee parameters and where each fee is routed, see [Protocol Fees](../protocol/fees.md).
+
 {% endtab %}
+
 {% endtabs %}

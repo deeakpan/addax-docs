@@ -1,23 +1,21 @@
 # Trading Overview
 
 {% tabs %}
+
 {% tab title="Mainnet" %}
-Mainnet trades are perpetual positions on Lighter. You post USDC as margin, choose a market and a direction, and an order is matched on the book.
 
-| Term | Meaning |
-|---|---|
-| **Margin** | USDC credited to your account |
-| **Leverage** | Set by the market. Major crypto markets go up to 50x |
-| **Direction** | Long or short |
-| **Entry** | The price you are filled at |
-| **Addax fee** | Up to 0.1% of the trade size when the order fills |
+The book is a list of bids and asks. Price is the best price that can fill you. Time priority decides which order at the same price fills first.
 
-Each order is signed with your API key. Funding is paid between traders once an hour. If the funding rate is positive, longs pay shorts. If it is negative, shorts pay longs.
+A post only order is added to the book and is rejected if it would trade immediately. An immediate or cancel order trades what it can and cancels the rest. A good till time order stays open until it fills, you cancel it, or it reaches its expiry. Expiry can be from 5 minutes to 30 days.
 
-Next: [Opening & Closing Trades](opening-closing-trades.md).
+Funding runs once an hour. A positive rate means longs pay shorts.
+
+Addax is built on [Lighter](https://lighter.xyz/).
+
 {% endtab %}
 
 {% tab title="Testnet" %}
+
 Addax powers decentralized leveraged trading across crypto, commodities, and equities. This page explains how the trading interface works and how a trade is priced and settled.
 
 ## The trading model
@@ -56,5 +54,7 @@ This means:
 - **Funding** accrued over time when the market is skewed (see [Funding Rates](funding-rates.md)).
 
 Next: [Opening & Closing Trades](opening-closing-trades.md).
+
 {% endtab %}
+
 {% endtabs %}

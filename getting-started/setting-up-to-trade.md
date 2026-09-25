@@ -1,32 +1,23 @@
 # Setting Up to Trade
 
 {% tabs %}
+
 {% tab title="Mainnet" %}
-## 1. Log in
 
-Open Addax and log in with MetaMask or a social account. **[Para](https://www.getpara.com/)** opens your embedded wallet. If you have logged in this way before, you get the same wallet back.
-
-## 2. Deposit USDC
-
-Send USDC to that wallet on Ethereum. If the funds start on another supported chain, the bridge delivers them to the same address. You approve the deposit policy once. Addax submits the deposit and pays the Ethereum gas.
-
-## 3. Register an API key
-
-You sign once to attach an API key to your account. That key signs later orders. You do not pay Ethereum gas to open, close, or cancel.
-
-## 4. Place a trade
-
-1. Pick a market.
+1. Open a market.
 2. Choose long or short.
-3. Set size and order type.
-4. Confirm. The API key signs the order.
+3. Choose a market, limit, stop, take profit, or TWAP order.
+4. Set size. Leverage follows that market's cap.
+5. Submit the order. A market order matches the book immediately. A limit order rests until it fills or you cancel it.
 
-When the order fills, Addax can charge up to 0.1% of the trade size in USDC.
+When the order fills, Addax can charge up to 0.1% of the trade size.
 
-> Mainnet deposits and trading described here are the planned flow. They are not live yet.
+Addax is built on [Lighter](https://lighter.xyz/).
+
 {% endtab %}
 
 {% tab title="Testnet" %}
+
 Follow these steps to place your first trade on Addax.
 
 ## 1. Connect your wallet
@@ -64,5 +55,7 @@ The first time you trade with a given collateral, you'll sign a one-time ERC-20 
 For a full walkthrough, continue to [Opening & Closing Trades](../trading/opening-closing-trades.md).
 
 > **Testnet reminder:** All assets on LitVM are testnet tokens with no monetary value. Use Addax to test strategies and integrations risk-free.
+
 {% endtab %}
+
 {% endtabs %}

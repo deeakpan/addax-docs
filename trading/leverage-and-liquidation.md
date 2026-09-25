@@ -1,15 +1,19 @@
 # Leverage & Liquidation
 
 {% tabs %}
+
 {% tab title="Mainnet" %}
-Leverage is set per market. Major crypto markets allow up to **50x**. Other markets allow less. Initial margin is the collateral required to open. Maintenance margin is the level where a position can be liquidated. Close out margin is the stricter level used when the position is being closed in liquidation.
 
-If losses reduce your margin through maintenance, the position is liquidated. A stop loss can close the position before that level.
+Each market sets its own maximum leverage. BTC and ETH allow up to 50x. Lower liquidity markets allow less. Initial margin is what you need to open. Maintenance margin is the level at which the position can be liquidated.
 
-A 50x position moves 50 times as fast as the underlying price, in both directions.
+A 50x position changes about 50 times as fast as the index, up or down. A stop can close the position before liquidation.
+
+Addax is built on [Lighter](https://lighter.xyz/).
+
 {% endtab %}
 
 {% tab title="Testnet" %}
+
 ## Leverage
 
 Leverage multiplies your exposure relative to the collateral you post. Addax supports leverage from **1x up to 100x**, depending on the market.
@@ -51,5 +55,7 @@ The exact liquidation price shown in the app accounts for spread, price impact, 
 - Watch **borrowing/holding fees** on long-held positions, they erode margin over time.
 
 See [Fees & Spread](fees-and-spread.md) for how fees affect your position, and [Keepers](../protocol/keepers.md) for how triggers are executed.
+
 {% endtab %}
+
 {% endtabs %}

@@ -1,28 +1,19 @@
 # Opening & Closing Trades
 
 {% tabs %}
+
 {% tab title="Mainnet" %}
-## Opening
 
-1. Select a market.
-2. Choose long or short.
-3. Set size and leverage allowed by that market.
-4. Choose an order type. A market order fills now, up to the worst price you set. A limit order rests until it trades or expires.
-5. Confirm. Your API key signs the order.
+To open, set a market, a side, a size, and an order type. A market order buys or sells against the current book. A limit order joins the book at your price.
 
-You can also attach a stop or a take profit. Those wait until the trigger price is reached, then close or open according to the order you set.
+To close, send an opposing order, or use a stop or take profit that fires when price trades through your trigger. Cancel a resting order any time before it fills. If margin falls through the maintenance level, the position is liquidated.
 
-## Closing
+Addax is built on [Lighter](https://lighter.xyz/).
 
-- Close the position with a market or limit order.
-- Cancel a resting order if it has not filled.
-- A stop or take profit closes for you when its trigger is hit.
-- If margin falls through the maintenance level, the position is liquidated.
-
-See [Order Types](order-types.md) and [Leverage & Liquidation](leverage-and-liquidation.md).
 {% endtab %}
 
 {% tab title="Testnet" %}
+
 This is a step-by-step guide to opening, managing, and closing positions on Addax.
 
 ## Opening a trade
@@ -57,5 +48,7 @@ Pending limit orders appear under the **Open Orders / Limits** tab, where you ca
 ## Who executes triggers
 
 Limit opens, TP, SL, and liquidations are executed by **keeper bots**, not by you. Keepers watch the chain and call the trigger + fulfill functions on the contracts when conditions are met, earning a small reward. This means your TP/SL/limit orders work even when your wallet is offline. See [Keepers](../protocol/keepers.md).
+
 {% endtab %}
+
 {% endtabs %}

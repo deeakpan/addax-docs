@@ -1,28 +1,23 @@
 # Addax Docs
 
 {% tabs %}
+
 {% tab title="Mainnet" %}
-Addax mainnet is a trading interface on Lighter. Login and the embedded wallet are provided by **[Para](https://www.getpara.com/)**. You deposit USDC and trade perpetual markets. Collateral settles in USDC on Ethereum. Addax charges up to **0.1%** of the trade when an order fills.
 
-You do not switch networks to place a trade, and you do not pay Ethereum gas on each order.
+Addax is a perpetual order book. You post a bid or an ask, or you take the price already resting on the book. A market order fills immediately, down to the worst price you allow. A limit order rests until it trades, expires, or you cancel it.
 
-## What you can do
+Stops and take profits sit off the book until their trigger price is hit, then they send a market or limit order. A TWAP splits a larger order into smaller fills over time.
 
-| | |
-|---|---|
-| **Trade** | Long or short perpetual markets |
-| **Order types** | Market, limit, stop, take profit, and TWAP |
-| **Fee** | Up to 0.1% of trade size, paid in USDC |
+Funding is paid between traders once an hour. When the rate is positive, longs pay shorts. When it is negative, shorts pay longs. Addax charges up to 0.1% of the trade size when an order fills.
 
-## Where to start
+Leverage depends on the market. Major crypto markets go up to 50x.
 
-- New here? Read [What is Addax](getting-started/what-is-addax.md).
-- Ready to trade? See [Setting up to trade](getting-started/setting-up-to-trade.md).
+Addax is built on [Lighter](https://lighter.xyz/).
 
-> Mainnet is the planned production flow. It is not live yet.
 {% endtab %}
 
 {% tab title="Testnet" %}
+
 Addax is a decentralized leveraged trading platform on **LitVM**. Trade crypto, commodities, and equities with up to 100x leverage, directly from your wallet. No sign-up, no custody, no order book.
 
 Addax uses a synthetic, oracle-priced trading model: instead of matching buyers and sellers, trades settle against a collateral vault at the oracle mark price. This lets Addax offer deep, uniform liquidity across every market and low, predictable fees.
@@ -46,5 +41,7 @@ Marks are supplied by **DIA**. On-chain trading activity is indexed with **Golds
 - Building an integration or bot? Start with [Developers](developers/README.md).
 
 > Addax is currently deployed on the LitVM testnet. All tokens are testnet assets with no monetary value.
+
 {% endtab %}
+
 {% endtabs %}
