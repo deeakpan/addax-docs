@@ -1,58 +1,15 @@
 # What is Addax
 
-{% tabs %}
+Addax matches orders on a central limit order book.
 
-{% tab title="Mainnet" %}
+A limit order that rests on the book makes liquidity. An order that trades against it takes liquidity. The price is the book price. A market order fills against the current bids or asks, down to the worst price you allow. What cannot be filled at that price is canceled.
 
-Addax matches orders on a central limit order book. A resting limit order makes liquidity. An order that trades against it takes liquidity. The fill price is the book price, not an oracle mark.
+You can also place a stop, a take profit, or a TWAP. A stop or take profit waits for its trigger, then enters the book as a market or limit order. A TWAP splits the order into smaller fills over time.
 
-You can trade with a market order, a limit order, a stop, a take profit, or a TWAP. Stops and take profits wait for a trigger price, then enter the book as a market or limit order.
+Positions pay funding once an hour. If the rate is positive, longs pay shorts. If it is negative, shorts pay longs.
 
-Positions pay or receive funding once an hour. The side that is more expensive relative to the index pays the other side. Addax charges up to 0.1% when your order fills.
+Login is through [Para](https://www.getpara.com/). You can connect MetaMask or use a social login. Either way you get an embedded wallet, and that wallet is yours on mainnet and on testnet.
+
+ADDX is a collateral asset. So is zkLTC. Addax routes both into USDC on Ethereum, and that USDC is the margin for the order book position. People who stake ADDX receive 40% of protocol fees.
 
 Addax is built on [Lighter](https://lighter.xyz/).
-
-{% endtab %}
-
-{% tab title="Testnet" %}
-
-Addax is a decentralized leveraged trading platform on LitVM. It lets you take long or short positions on crypto, commodities, and equities with up to 100x leverage, using your own wallet and self-custodied collateral.
-
-Addax does not use a traditional order book. Instead it settles trades synthetically against a **collateral vault** at an oracle-provided price. This design, pioneered by gTrade / Gains Network, which Addax is built on, gives every market deep and uniform liquidity, tight execution, and low fees, regardless of trade size relative to on-chain order-book depth.
-
-## How it works at a glance
-
-1. You deposit collateral (USDC, ADDX, or zkLTC) as margin and choose a market, direction, and leverage.
-2. Addax opens a position priced from the **oracle mark price**, not from matching a counterparty.
-3. Your profit or loss is paid from, or into, the collateral vault backing that market.
-4. You can attach a **take-profit** and **stop-loss**, or place a **limit order** that only opens when price reaches your target.
-5. Keeper bots monitor open positions and pending orders, and execute liquidations, limits, and TP/SL triggers automatically on-chain.
-
-## Why synthetic + oracle pricing
-
-| | Order-book DEX | Addax (synthetic) |
-|---|---|---|
-| Liquidity source | Resting limit orders | Collateral vault |
-| Price | Best bid/ask | Oracle mark price |
-| Slippage | Grows with size and thin books | None from book depth; only spread + price impact |
-| Markets | Limited by market-maker presence | Any asset with a reliable price feed |
-| Max leverage | Typically low | Up to 100x |
-
-## The two sides of Addax
-
-- **Traders** post margin and open leveraged positions. Their PnL flows to and from the vault.
-- **Liquidity providers** deposit into **gToken vaults** (gUSDC, gzKLTC, gADDX). They act as the counterparty to all traders and earn from trading fees; over time the vault profits when traders net lose and draws down when traders net win.
-
-## Trust model
-
-- **Self-custody**: you always control your collateral through your own wallet.
-- **On-chain settlement**: positions, orders, and PnL are enforced by smart contracts.
-- **Oracle pricing**: marks come from **DIA** (push feeds at 1% deviation / 1h heartbeat on testnet), not from an internal book.
-- **Indexed history**: protocol activity is indexed with **Goldsky** for reliable off-chain reads of trading events.
-- **Permissionless keepers**: anyone can run a keeper to execute triggers and earn rewards.
-
-Continue to [Network & Setup](network.md) to connect your wallet.
-
-{% endtab %}
-
-{% endtabs %}

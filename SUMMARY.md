@@ -5,43 +5,32 @@
 ## Getting Started
 
 * [What is Addax](getting-started/what-is-addax.md)
-* [Network & Setup](getting-started/network.md)
+* [Log in](getting-started/network.md)
 * [Setting Up to Trade](getting-started/setting-up-to-trade.md)
-* [Collateral & Tokens](getting-started/tokens.md)
-* [Get Testnet zkLTC](getting-started/faucet.md)
+* [Collateral & ADDX](getting-started/tokens.md)
 
-## Leveraged Trading
+## Trading
 
 * [Overview](trading/overview.md)
 * [Opening & Closing Trades](trading/opening-closing-trades.md)
 * [Order Types](trading/order-types.md)
 * [Leverage & Liquidation](trading/leverage-and-liquidation.md)
-* [Fees & Spread](trading/fees-and-spread.md)
+* [Fees](trading/fees-and-spread.md)
 * [Funding Rates](trading/funding-rates.md)
-* [Pair List](trading/pair-list.md)
-* [Asset Classes](trading/asset-classes.md)
 
-## Vaults
+## Testnet
 
+* [Starting on testnet](testnet/start.md)
+* [Network](testnet/network.md)
+* [Get zkLTC](getting-started/faucet.md)
+* [DIA prices](testnet/oracle.md)
 * [gToken Vaults](vaults/overview.md)
 * [Depositing & Withdrawing](vaults/depositing.md)
 * [ADDX Staking](vaults/staking.md)
-
-## Protocol
-
-* [Architecture Overview](protocol/overview.md)
-* [Price Oracle](protocol/price-oracle.md)
+* [Architecture](protocol/overview.md)
 * [Keepers](protocol/keepers.md)
-* [Fees](protocol/fees.md)
 * [Contracts & Addresses](protocol/contracts.md)
-
-## Developers
-
-* [Integration Overview](developers/README.md)
-* [Trading API](developers/trading-api.md)
-* [Public REST API](developers/public-api.md)
-* [Direct Contract Integration](developers/contracts.md)
-* [Fetching Prices](developers/fetching-prices.md)
+* [Developers](developers/README.md)
 
 ## Help
 

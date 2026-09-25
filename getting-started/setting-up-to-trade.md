@@ -1,61 +1,23 @@
 # Setting Up to Trade
 
-{% tabs %}
+## 1. Log in
 
-{% tab title="Mainnet" %}
+Use [Para](https://www.getpara.com/). Connect MetaMask or sign in with a social account. Para opens your embedded wallet. This step is the same on mainnet and on testnet.
 
-1. Open a market.
+## 2. Post collateral
+
+On mainnet you can post ADDX or zkLTC. Addax routes that balance into USDC on Ethereum. The USDC is credited to your embedded wallet and becomes margin.
+
+You can also start from USDC that is already on Ethereum in that wallet.
+
+## 3. Place an order
+
+1. Pick a market.
 2. Choose long or short.
-3. Choose a market, limit, stop, take profit, or TWAP order.
-4. Set size. Leverage follows that market's cap.
-5. Submit the order. A market order matches the book immediately. A limit order rests until it fills or you cancel it.
+3. Choose market, limit, stop, take profit, or TWAP.
+4. Set the size. Leverage follows the cap for that market. Majors go up to 50x.
+5. Submit. A market order matches the book now. A limit order rests until it fills or you cancel it.
 
-When the order fills, Addax can charge up to 0.1% of the trade size.
+A fill can include an Addax fee of up to 0.1% of the trade size. 40% of protocol fees go to ADDX stakers.
 
 Addax is built on [Lighter](https://lighter.xyz/).
-
-{% endtab %}
-
-{% tab title="Testnet" %}
-
-Follow these steps to place your first trade on Addax.
-
-## 1. Connect your wallet
-
-Open the Addax app and connect an EVM wallet (MetaMask, Rabby, WalletConnect, etc.). Approve the prompt to add or switch to the **LitVM** network (chain ID `4441`).
-
-## 2. Get gas
-
-Every transaction costs a small amount of native **zkLTC** for gas. Claim testnet zkLTC from the LitVM faucet, see [Get Testnet zkLTC](faucet.md).
-
-## 3. Get collateral
-
-You can open trades with any of the supported collaterals:
-
-| Collateral | Vault | Notes |
-|---|---|---|
-| **USDC** | gUSDC | Stablecoin margin; has a testnet faucet |
-| **ADDX** | gADDX | Native protocol token |
-| **zkLTC / WzkLTC** | gzKLTC | Native gas token; wrapped to WzkLTC for margin |
-
-See [Collateral & Tokens](tokens.md) for addresses and how to obtain each.
-
-## 4. Approve your collateral
-
-The first time you trade with a given collateral, you'll sign a one-time ERC-20 **approval** so the trading contract can pull your margin. This is a per-token, per-stack approval.
-
-## 5. Place a trade
-
-1. Pick a market (e.g. BTC, ETH, LTC, XAU, TSLA).
-2. Choose **Long** or **Short**.
-3. Set your **collateral amount** and **leverage** (1x–100x).
-4. Optionally set a **limit price**, **take-profit**, and **stop-loss**.
-5. Confirm the transaction.
-
-For a full walkthrough, continue to [Opening & Closing Trades](../trading/opening-closing-trades.md).
-
-> **Testnet reminder:** All assets on LitVM are testnet tokens with no monetary value. Use Addax to test strategies and integrations risk-free.
-
-{% endtab %}
-
-{% endtabs %}

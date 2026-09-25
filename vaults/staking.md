@@ -1,6 +1,8 @@
 # ADDX Staking
 
-ADDX is the native Addax protocol token. Beyond being usable as trading collateral (via the gADDX vault), ADDX can be **staked** to earn a share of protocol rewards.
+ADDX stakers receive **40% of protocol fees**. On mainnet that fee is the Addax charge of up to 0.1% of filled size. Funding is not included.
+
+On testnet, staking also deposits ADDX into the staking contract and pays rewards in proportion to your stake.
 
 ## What staking does
 

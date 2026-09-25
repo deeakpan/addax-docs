@@ -1,54 +1,21 @@
 # Opening & Closing Trades
 
-{% tabs %}
+Log in with [Para](https://www.getpara.com/) first, using MetaMask or a social login, so your embedded wallet is ready. Mainnet and testnet share that step. Testnet chain setup is under [Starting on testnet](../testnet/start.md).
 
-{% tab title="Mainnet" %}
+## Open
 
-To open, set a market, a side, a size, and an order type. A market order buys or sells against the current book. A limit order joins the book at your price.
+1. Select a market.
+2. Choose long or short.
+3. Set size. Leverage cannot pass the cap for that market.
+4. Choose a market, limit, stop, take profit, or TWAP.
+5. Submit.
 
-To close, send an opposing order, or use a stop or take profit that fires when price trades through your trigger. Cancel a resting order any time before it fills. If margin falls through the maintenance level, the position is liquidated.
+A market order matches the book immediately. A limit order rests at your price.
+
+## Close
+
+Send an order on the other side, or use a stop or take profit. Those wait for the trigger price, then enter the book. Cancel a resting order before it fills. If margin falls through the maintenance level, the position is liquidated.
+
+On mainnet, ADDX or zkLTC collateral is routed to USDC on Ethereum before the position is opened. The USDC is on your Para embedded wallet.
 
 Addax is built on [Lighter](https://lighter.xyz/).
-
-{% endtab %}
-
-{% tab title="Testnet" %}
-
-This is a step-by-step guide to opening, managing, and closing positions on Addax.
-
-## Opening a trade
-
-1. **Select a market**: pick a pair such as BTC, ETH, LTC, XAU, or TSLA from the market selector.
-2. **Choose direction**: **Long** if you expect the price to rise, **Short** if you expect it to fall.
-3. **Pick collateral**: USDC, ADDX, or zkLTC. Each maps to its own vault stack.
-4. **Enter amount & leverage**: set your collateral amount and slide leverage from 1x to 100x. Position size = collateral x leverage.
-5. **Choose order type:**
- - **Market**: opens immediately at the current oracle price.
- - **Limit**: opens only when the market reaches your specified price. When you switch to Limit, the price field is pre-filled with the current mark price; edit it to your target.
-6. **(Optional) Set TP / SL**: attach a take-profit and/or stop-loss so the position closes automatically.
-7. **Confirm**: sign the transaction. Market orders open in the same transaction once the price is confirmed; limit orders are stored on-chain until triggered.
-
-## Managing an open position
-
-From the **Positions** tab you can:
-
-- **Add / edit take-profit and stop-loss** on a live position.
-- **Partially close** to realize part of your PnL and reduce size.
-- **Close fully** at the current market price.
-
-Pending limit orders appear under the **Open Orders / Limits** tab, where you can **cancel** them before they trigger.
-
-## Closing a trade
-
-- **Manual close**: hit Close (full or partial); the position settles at the current oracle price minus spread.
-- **Take-profit**: a keeper closes the position when price reaches your TP target.
-- **Stop-loss**: a keeper closes the position when price hits your SL, capping your loss.
-- **Liquidation**: if losses erode your margin past the maintenance threshold, a keeper liquidates the position. See [Leverage & Liquidation](leverage-and-liquidation.md).
-
-## Who executes triggers
-
-Limit opens, TP, SL, and liquidations are executed by **keeper bots**, not by you. Keepers watch the chain and call the trigger + fulfill functions on the contracts when conditions are met, earning a small reward. This means your TP/SL/limit orders work even when your wallet is offline. See [Keepers](../protocol/keepers.md).
-
-{% endtab %}
-
-{% endtabs %}

@@ -1,43 +1,19 @@
-# Collateral & Tokens
+# Collateral & ADDX
 
-Addax lets you post margin in three collaterals. Each collateral has its own **stack** (trading contracts + gToken vault), so a USDC trade is backed by the gUSDC vault, an ADDX trade by the gADDX vault, and a zkLTC trade by the gzKLTC vault.
-
-## Supported collaterals
-
-| Collateral | Symbol | Decimals | ERC-20 address | Vault |
-|---|---|---|---|---|
-| USDC | `USDC` | 6 | `0xA6b7A782Fc4349914dADde5b8A8A8B1daDFBF6DB` | gUSDC |
-| ADDX | `ADDX` | 18 | `0xf6078Be81aBCC95BAC306356963E7adB986783f9` | gADDX |
-| Wrapped zkLTC | `WzkLTC` | 18 | `0xA52F83592b9216C574e11324d4468F078aEA05BE` | gzKLTC |
-
-> Addresses above are the current LitVM deployment. See [Contracts & Addresses](../protocol/contracts.md) for the full list.
-
-## USDC
-
-The primary trading collateral, a 6-decimal test USDC with a faucet. Deposit USDC as margin and your position is backed by the **gUSDC** vault. This is the default and recommended collateral for most traders.
+Margin on the order book is USDC on Ethereum, held by your Para embedded wallet.
 
 ## ADDX
 
-The native Addax protocol token (18 decimals). Trades collateralized in ADDX are backed by the **gADDX** vault. ADDX can also be staked, see [ADDX Staking](../vaults/staking.md).
+ADDX is collateral. When you deposit ADDX, Addax routes it into USDC on Ethereum and credits that USDC to your embedded wallet. The position is then opened against that USDC.
 
-## zkLTC and WzkLTC
+Stake ADDX and you receive 40% of protocol fees. The protocol fee is the Addax charge of up to 0.1% of filled size. Funding is not part of that fee. Funding is paid between traders.
 
-`zkLTC` is the native gas token on LitVM. To use it as margin it must be **wrapped** to the ERC-20 `WzkLTC`. The app wraps it for you when you select zkLTC as collateral; you can also wrap manually:
+## zkLTC
 
-```solidity
-// Wrap native zkLTC into WzkLTC (WETH9 interface)
-WzkLTC.deposit{ value: 1 ether }();
+zkLTC is collateral in the same way. Addax routes zkLTC into USDC on Ethereum and credits your embedded wallet. The order book position uses that USDC.
 
-// Unwrap back to native zkLTC
-WzkLTC.withdraw(amount);
-```
+## USDC
 
-Trades collateralized in WzkLTC are backed by the **gzKLTC** vault.
+USDC that is already on Ethereum can be used directly. It does not need to be routed from ADDX or zkLTC.
 
-## Getting testnet tokens
-
-- **zkLTC**: claim from the LitVM faucet (see [Get Testnet zkLTC](faucet.md)).
-- **USDC**: mint from the in-app faucet / test USDC contract.
-- **ADDX**: obtain from the app faucet or a distribution as available on testnet.
-
-Continue to [Setting Up to Trade](setting-up-to-trade.md).
+Addax is built on [Lighter](https://lighter.xyz/).
