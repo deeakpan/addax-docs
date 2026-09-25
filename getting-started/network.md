@@ -2,7 +2,7 @@
 
 {% tabs %}
 {% tab title="Mainnet" %}
-Mainnet trading settles on Ethereum, through Lighter. You stay in the Addax app. The address that receives USDC is your embedded wallet.
+Mainnet trading settles on Ethereum, through Lighter. You stay in the Addax app. Wallets are provided by **[Para](https://www.getpara.com/)**. The address that receives USDC is your Para embedded wallet.
 
 | | |
 |---|---|

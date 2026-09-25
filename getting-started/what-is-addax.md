@@ -6,7 +6,7 @@ On mainnet, Addax is the interface for perpetual trading on Lighter. You keep a 
 
 ## How a deposit works
 
-1. You log in with MetaMask or a social account. Addax creates an embedded wallet for you, or restores the one already linked to that login.
+1. You log in with MetaMask or a social account through **[Para](https://www.getpara.com/)**, our wallet provider. Para creates an embedded wallet for you, or restores the one already linked to that login.
 2. USDC is bridged to that embedded wallet on Ethereum. The destination is always that address.
 3. You approve a policy once. It allows Addax to pull the amount you chose and deposit it for you.
 4. Addax sends that deposit and pays the Ethereum gas. Your balance is credited on Lighter to the same address.

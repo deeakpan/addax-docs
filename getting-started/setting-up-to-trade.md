@@ -4,7 +4,7 @@
 {% tab title="Mainnet" %}
 ## 1. Log in
 
-Open Addax and log in with MetaMask or a social account. Addax opens your embedded wallet. If you have logged in this way before, you get the same wallet back.
+Open Addax and log in with MetaMask or a social account. **[Para](https://www.getpara.com/)** opens your embedded wallet. If you have logged in this way before, you get the same wallet back.
 
 ## 2. Deposit USDC
 

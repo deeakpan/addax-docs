@@ -2,7 +2,7 @@
 
 {% tabs %}
 {% tab title="Mainnet" %}
-Addax mainnet is a trading interface on Lighter. You log in on Addax, deposit USDC, and trade perpetual markets. Collateral settles in USDC on Ethereum. Addax charges up to **0.1%** of the trade when an order fills.
+Addax mainnet is a trading interface on Lighter. Login and the embedded wallet are provided by **[Para](https://www.getpara.com/)**. You deposit USDC and trade perpetual markets. Collateral settles in USDC on Ethereum. Addax charges up to **0.1%** of the trade when an order fills.
 
 You do not switch networks to place a trade, and you do not pay Ethereum gas on each order.
 
