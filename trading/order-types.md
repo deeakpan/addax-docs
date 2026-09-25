@@ -1,5 +1,25 @@
 # Order Types
 
+{% tabs %}
+{% tab title="Mainnet" %}
+Mainnet supports the Lighter order types.
+
+| Type | What it does |
+|---|---|
+| **Market** | Fills immediately, at the worst price you allow or better |
+| **Limit** | Rests at your price until it fills, expires, or you cancel it |
+| **Stop loss** | Triggers at your stop price, then sends a market close |
+| **Stop loss limit** | Triggers at your stop price, then rests a limit order |
+| **Take profit** | Triggers at your target, then sends a market close |
+| **Take profit limit** | Triggers at your target, then rests a limit order |
+| **TWAP** | Splits the order into smaller fills over time |
+
+A limit or stop can be post only, which means it will not take liquidity, or immediate or cancel, which means what does not fill immediately is canceled. The default for resting orders is good till time. An order can stay open from 5 minutes to 30 days.
+
+You refer to an order by the client id you set when it was created. Cancel and modify use that same id.
+{% endtab %}
+
+{% tab title="Testnet" %}
 Addax supports four order types. Market and limit orders **open** positions; take-profit and stop-loss orders **close** them. Liquidations are a fifth, protocol-enforced close trigger.
 
 ## Market order
@@ -45,3 +65,5 @@ Limit, TP, SL, and liquidation are **two-step** on-chain actions:
 2. A `fulfillOrder` call on the price aggregator then resolves the price and completes the open or close.
 
 Market orders are self-fulfilling, the open/close and price fulfillment happen in a single transaction. See [Keepers](../protocol/keepers.md) and [Trading Contracts](../developers/contracts.md) for details.
+{% endtab %}
+{% endtabs %}

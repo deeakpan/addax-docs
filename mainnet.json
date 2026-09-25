@@ -1,0 +1,57 @@
+{
+  "status": "planned",
+  "note": "Local checklist for the mainnet launch. Not a live deployment.",
+  "venue": "lighter",
+  "wallet": {
+    "provider": "para",
+    "ownership": "user-owned",
+    "login": ["metamask", "social"],
+    "depositAddress": "embedded wallet"
+  },
+  "fee": {
+    "label": "Addax fee",
+    "max": "0.1%",
+    "bps": 10,
+    "units": 1000,
+    "asset": "USDC",
+    "chargedOn": "fill",
+    "approval": "User approves the maximum once. Each order can charge up to that rate."
+  },
+  "settlement": {
+    "chain": "Ethereum",
+    "chainId": 1,
+    "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "lighterVault": "0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+    "api": "https://mainnet.zklighter.elliot.ai",
+    "websocket": "wss://mainnet.zklighter.elliot.ai/stream"
+  },
+  "bridges": [
+    {
+      "id": "ethereum",
+      "name": "Ethereum USDC",
+      "status": "supported",
+      "chainId": 1,
+      "destination": "embedded wallet"
+    },
+    {
+      "id": "cctp",
+      "name": "Circle CCTP",
+      "status": "supported",
+      "destination": "embedded wallet on Ethereum",
+      "sources": [
+        { "name": "Arbitrum", "chainId": 42161 },
+        { "name": "Base", "chainId": 8453 },
+        { "name": "Optimism", "chainId": 10 },
+        { "name": "Polygon", "chainId": 137 },
+        { "name": "Avalanche", "chainId": 43114 }
+      ]
+    },
+    {
+      "id": "litvm",
+      "name": "LitVM",
+      "status": "planned",
+      "destination": "embedded wallet on Ethereum",
+      "destinationLocked": true
+    }
+  ]
+}

@@ -1,5 +1,28 @@
 # Addax Docs
 
+{% tabs %}
+{% tab title="Mainnet" %}
+Addax mainnet is a trading interface on Lighter. You log in on Addax, deposit USDC, and trade perpetual markets. Collateral settles in USDC on Ethereum. Addax charges up to **0.1%** of the trade when an order fills.
+
+You do not switch networks to place a trade, and you do not pay Ethereum gas on each order.
+
+## What you can do
+
+| | |
+|---|---|
+| **Trade** | Long or short perpetual markets |
+| **Order types** | Market, limit, stop, take profit, and TWAP |
+| **Fee** | Up to 0.1% of trade size, paid in USDC |
+
+## Where to start
+
+- New here? Read [What is Addax](getting-started/what-is-addax.md).
+- Ready to trade? See [Setting up to trade](getting-started/setting-up-to-trade.md).
+
+> Mainnet is the planned production flow. It is not live yet.
+{% endtab %}
+
+{% tab title="Testnet" %}
 Addax is a decentralized leveraged trading platform on **LitVM**. Trade crypto, commodities, and equities with up to 100x leverage, directly from your wallet. No sign-up, no custody, no order book.
 
 Addax uses a synthetic, oracle-priced trading model: instead of matching buyers and sellers, trades settle against a collateral vault at the oracle mark price. This lets Addax offer deep, uniform liquidity across every market and low, predictable fees.
@@ -23,3 +46,5 @@ Marks are supplied by **DIA**. On-chain trading activity is indexed with **Golds
 - Building an integration or bot? Start with [Developers](developers/README.md).
 
 > Addax is currently deployed on the LitVM testnet. All tokens are testnet assets with no monetary value.
+{% endtab %}
+{% endtabs %}
